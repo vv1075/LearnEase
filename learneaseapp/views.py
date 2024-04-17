@@ -50,3 +50,22 @@ def profile(request):
     else:
         form = UserProfileForm(instance=profile)
     return render(request, 'learneaseapp/profile.html', {'form': form, 'profile': profile,'profile_picture': profile_picture})
+
+@login_required
+def update_profile(request):
+    try:
+        profile = request.user.userprofile  # Try to get the profile if it exists
+    except UserProfile.DoesNotExist:
+        profile = UserProfile.objects.create(user=request.user)# If it doesn't exist, set it to None
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = request.user
+            profile.save()
+            return redirect('profile')
+    else:
+        form = UserProfileForm(instance=profile)
+    return render(request, 'learneaseapp/update_profile.html', {'form': form})
+                  
