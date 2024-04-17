@@ -1,3 +1,13 @@
 from django.contrib import admin
+from .models import *
+from .forms import *
 
-# Register your models here.
+@admin.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'bio', 'profile_picture','date_of_birth','location','user_type')
+    search_fields = ('user__username',)
+    form = UserProfileForm
+
+    def user(self, obj):
+        return obj.user.username
+  

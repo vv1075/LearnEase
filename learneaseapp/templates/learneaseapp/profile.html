@@ -1,0 +1,27 @@
+{% extends 'learneaseapp/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h2>User Information</h2>
+    <div class="col-md-6 text-right"> 
+      {% if profile_picture %}
+      <img src="{{ profile_picture }}" alt="Profile Picture" class="rounded-circle img-thumbnail" style="max-width: 100px; max-height: 100px;">
+      {% else %}
+      <p>No profile picture available</p>
+      {% endif %}
+    </div>
+      <p><strong>Username:</strong> {{ request.user.username }}</p>
+      <p><strong>Email:</strong> {{ request.user.email }}</p>
+      <p><strong>Bio:</strong> {{ profile.bio }}</p>
+      <p><strong>Date of Birth:</strong> {{ profile.date_of_birth }}</p>
+      <p><strong>Location:</strong> {{ profile.location }}</p>
+      <a href="{% url 'update_profile' %}" class="btn btn-outline-info">Update Profile</a>
+
+      <!-- Display other user information as needed -->
+  </div>
+</div>
+
+{% endblock content %}

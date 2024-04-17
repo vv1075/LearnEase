@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse 
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404 
 from .forms import UserRegistrationform, UserProfileForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -32,3 +32,21 @@ def registration(request):
         profile_form = UserProfileForm()
         
     return render(request,'learneaseapp/register.html',{'user_form': user_form, 'profile_form': profile_form,})
+
+@login_required
+def profile(request):
+    try:
+        profile = request.user.userprofile
+        profile_picture = profile.profile_picture.url
+    except UserProfile.DoesNotExist:
+        # If UserProfile does not exist for the user, create a new one
+        profile = UserProfile.objects.create(user=request.user)
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = UserProfileForm(instance=profile)
+    return render(request, 'learneaseapp/profile.html', {'form': form, 'profile': profile,'profile_picture': profile_picture})
