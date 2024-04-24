@@ -18,4 +18,7 @@ class UserProfileForm(forms.ModelForm):
         widgets = {
             'date_of_birth': forms.DateInput(attrs={'type': 'date', 'placeholder': 'YYYY-MM-DD'}),
         }
+        
+class DashboardForm(forms.Form):
+    text = forms.CharField(max_length=100,label="")
  
