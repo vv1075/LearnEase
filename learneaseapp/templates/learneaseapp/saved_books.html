@@ -1,0 +1,40 @@
+<!-- saved_books.html -->
+{% extends 'app/base.html' %} 
+{% block content %}
+<section class="container">
+    <div class="text-center mb-5">
+        <h2 class="font-weight-bold">Saved Books</h2>
+    </div>
+    <div class="row mt-5">
+        {% for book in saved_books %}
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <a href="{{ book.preview }}" target="_blank">
+                        <img class="img-fluid" src="{{ book.thumbnail }}" alt="">
+                    </a>
+                    <h5 class="card-title">{{ book.title }}</h5>
+                    <p class="card-text">{{ book.subtitle }}</p>
+                    {% if book.description %}
+                    <p class="card-text">{{ book.description }}</p>
+                    {% endif %}
+                    <p class="card-text">
+                        {% if book.categories %}
+                            <strong>Categories:</strong>
+                            {{ book.categories }}
+                            <br>
+                        {% endif %}
+                        {% if book.count %}
+                            <strong>Pages:</strong> {{ book.count }}
+                        {% endif %}
+                        {% if book.rating %}
+                            <strong>Rating:</strong> {{ book.rating }}
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock content %}

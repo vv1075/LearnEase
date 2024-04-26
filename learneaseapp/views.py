@@ -101,6 +101,38 @@ def books(request):
         context = {'form': form}
         return render(request, "learneaseapp/books.html", context)
     
+def save_book(request):
+    if request.method == "POST":
+        title = request.POST.get('title')
+        subtitle = request.POST.get('subtitle')
+        description = request.POST.get('description')
+        count = request.POST.get('count')
+        categories = request.POST.get('categories')
+        rating = request.POST.get('rating')
+        thumbnail = request.POST.get('thumbnail')
+        preview = request.POST.get('preview')
+        
+        rating = float(rating) if rating != 'None' else None
+        
+        SavedBook.objects.create(
+            title=title,
+            subtitle=subtitle,
+            description=description,
+            count=count,
+            categories=categories,
+            rating=rating,
+            thumbnail=thumbnail,
+            preview=preview
+        )
+        return redirect('saved_books')
+    else:
+        return redirect('books')
+
+def saved_books(request):
+    saved_books = SavedBook.objects.all()
+    context = {'saved_books': saved_books}
+    return render(request, 'learneaseapp/saved_books.html',context)
+    
 def dictionary(request):
     if request.method == "POST":
         form = DashboardForm(request.POST)
