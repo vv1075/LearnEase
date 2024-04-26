@@ -18,3 +18,17 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+class SavedBook(models.Model):
+
+    title = models.CharField(max_length=255)
+    subtitle = models.CharField(max_length=255, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    count = models.IntegerField(blank=True, null=True)
+    categories = models.CharField(max_length=255, blank=True, null=True)
+    rating = models.FloatField(blank=True, null=True)
+    thumbnail = models.URLField(blank=True, null=True)
+    preview = models.URLField(blank=True, null=True)
+                              
+
+                              
