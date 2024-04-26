@@ -1,0 +1,55 @@
+{% extends 'app/base.html' %} 
+{% load static %} 
+{% block content %}
+
+<section class="container">
+    <div class="text-center mb-5">
+        <h2 class="font-weight-bold">Welcome {{ request.user.last_name }}</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form action="" method="post">
+                {% csrf_token %}
+                <span>Enter your books:</span>
+                {{ form }}
+                <button class="btn btn-danger" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <div class="row mt-5">
+        {% for result in results %}
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center"> <!-- Modified here: Added text-center class -->
+                    <a href="{{ result.preview }}" target="_blank">
+                        <img class="img-fluid" src="{{ result.thumbnail }}" alt="">
+                    </a>
+                    <h5 class="card-title">{{ result.title }}</h5>
+                    <p class="card-text">{{ result.subtitle }}</p>
+                    {% if result.description %}
+                    <p class="card-text">{{ result.description }}</p>
+                    {% endif %}
+                    <p class="card-text">
+                        {% if result.categories %}
+                            <strong>Categories:</strong>
+                            {% for category in result.categories %}
+                                {{ category }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                            <br>
+                        {% endif %}
+                        {% if result.count %}
+                            <strong>Pages:</strong> {{ result.count }}<br>
+                        {% endif %}
+                        {% if result.rating %}
+                            <strong>Rating:</strong> {{ result.rating }}<br>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock content %}

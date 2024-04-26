@@ -54,9 +54,9 @@ def profile(request):
 @login_required
 def update_profile(request):
     try:
-        profile = request.user.userprofile  # Try to get the profile if it exists
+        profile = request.user.userprofile 
     except UserProfile.DoesNotExist:
-        profile = UserProfile.objects.create(user=request.user)# If it doesn't exist, set it to None
+        profile = UserProfile.objects.create(user=request.user)
 
     if request.method == 'POST':
         form = UserProfileForm(request.POST, request.FILES, instance=profile)
@@ -67,5 +67,37 @@ def update_profile(request):
             return redirect('profile')
     else:
         form = UserProfileForm(instance=profile)
-    return render(request, 'learneaseapp/update_profile.html', {'form': form})
+    return render(request, 'learneaseapp/update_profile.html',{'form':form})
+
+def books(request):
+    if request.method == "POST":
+        form = DashboardForm(request.POST)
+        text = request.POST.get('text', '')  # Use get() method to safely retrieve 'text' parameter
+        url = "https://www.googleapis.com/books/v1/volumes?q="+text
+        r= requests.get(url)
+        answer = r.json()
+        result_list = []
+        for i in range(10):
+            result_dict = {
+                'title': answer['items'][i]['volumeInfo']['title'],
+                'subtitle': answer['items'][i]['volumeInfo'].get('subtitle'),
+                'description': answer['items'][i]['volumeInfo'].get('description'),
+                'count': answer['items'][i]['volumeInfo'].get('pageCount'),
+                'categories': answer['items'][i]['volumeInfo'].get('categories'),
+                'rating': answer['items'][i]['volumeInfo'].get('pageRating'),
+                'thumbnail': answer['items'][i]['volumeInfo'].get('imageLinks').get('thumbnail'),
+                'preview': answer['items'][i]['volumeInfo'].get('previewLink'),
+                 
+            }
+            result_list.append(result_dict)
+            context = {
+            'form': form,
+            'results': result_list
+            }
+        return render(request, 'learneaseapp/books.html', context)
+    else:
+        form = DashboardForm()
+        context = {'form': form}
+        return render(request, "learneaseapp/books.html", context)
+
                   
