@@ -1,0 +1,38 @@
+{% extends 'app/base.html' %} 
+{% load crispy_forms_tags %}
+{% block content %}
+<section class="container">
+    <div class="text-center mb-5">
+        <h2 class="font-weight-bold">Welcome {{ request.user.last_name }}</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form action="" method="post">
+                {% csrf_token %}
+                <span>Enter video name:</span>
+                {{ form }}
+                <button class="btn btn-danger" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+    <div class="row">
+        {% for result in results %}
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <a href="{{ result.link }}" target="_blank">
+                    <img src="{{ result.thumbnails }}" class="card-img-top" alt="Thumbnail">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">{{ result.title }}</h5>
+                    <p class="card-text">{{ result.description }}</p>
+                    <p class="card-text"><small class="text-muted">{{ result.channel }}</small></p>
+                    <p class="Duration">{{ result.duration }}</p>
+                    <p class="views">{{ result.views }}</p>
+                    <p class="card-text">{{ result.published }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

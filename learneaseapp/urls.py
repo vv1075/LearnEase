@@ -9,4 +9,5 @@ urlpatterns = [
     path('update_profile/', views.update_profile, name='update_profile'),
     path('books',views.books,name="books"),  
     path('dictionary',views.dictionary,name="dictionary"),
+    path('youtube',views.youtube,name="youtube"),
 ] 
