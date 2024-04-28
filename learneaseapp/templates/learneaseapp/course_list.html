@@ -1,0 +1,22 @@
+{% extends 'learneaseapp/base.html' %}
+{% block content %}
+<div class="center-table">
+    <h1>Course List</h1>
+    <table class="assignment-table">
+        <thead>
+            <tr>
+                <th>Course ID</th>
+                <th>Course Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courses %}
+            <tr>
+                <td>{{ course.id }}</td>
+                <td><a href="{% url 'assignment_list' course_id=course.id  %}">{{course.name}}</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -10,4 +10,7 @@ class UserProfileAdmin(admin.ModelAdmin):
 
     def user(self, obj):
         return obj.user.username
-  
+    
+
+
+admin.site.register(Course)

@@ -199,5 +199,9 @@ def youtube(request):
         context = {'form': form}
         return render(request, "learneaseapp/youtube.html", context)
 
+def course_list(request):
+    courses = Course.objects.all()
+    return render(request, 'learneaseapp/course_list.html', {'courses': courses})
+
 
                   

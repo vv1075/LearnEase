@@ -12,4 +12,5 @@ urlpatterns = [
     path('saved_books/', views.saved_books, name='saved_books'),
     path('dictionary',views.dictionary,name="dictionary"),
     path('youtube',views.youtube,name="youtube"),
+    path('courses/', views.course_list, name='course_list'),
 ] 
