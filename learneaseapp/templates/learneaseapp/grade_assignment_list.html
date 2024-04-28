@@ -1,0 +1,38 @@
+{% extends 'learneaseapp/base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>Assignment: {{ assignment.title }}</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Assignment ID</th>
+                <th>Student ID</th>
+                <th>Student Username</th>
+                <th>Submitted File</th>
+                <th>Review Assignment</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for submission in submissions %}
+                <tr>
+                    <td>{{ submission.assignment.id }}</td>
+                    <td>{{ submission.student.id }}</td>
+                    <td>{{ submission.student.username }}</td>
+                    <td><a href="{{ submission.file.url }}" target="_blank">Download</a></td>
+                    <td><a href="{% url 'grade_submission' submission.id %}">Review</a></td>
+                    <td>
+                        {% if latest_grade %}
+                            {% if latest_grade.student == submission.student %}
+                                {{ latest_grade.score }}
+                            {% endif %}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
