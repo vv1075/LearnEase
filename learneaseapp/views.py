@@ -224,6 +224,20 @@ def create_assignment(request, course_id):
     return render(request, 'learneaseapp/create_assignment.html', {'form': form, 'course': course, 'students': students})
 
 @login_required
+def assignment_list(request, course_id):
+    course = Course.objects.get(id=course_id)
+    assignments = Assignment.objects.filter(course_id=course_id).annotate(latest_grade_id=Max('grade__score'))
+    
+    
+    if request.user.userprofile.user_type == 'Student':
+        submissions = Submission.objects.filter(student=request.user)
+        grades = Grade.objects.filter(student=request.user)
+        submitted_assignments = {submission.assignment_id: submission for submission in submissions}
+        return render(request, 'learneaseapp/assignment_list.html', {'assignments': assignments, 'grades': grades, 'course': course, 'submitted_assignments': submitted_assignments})
+    else:
+        return render(request, 'learneaseapp/assignment_list.html', {'assignments': assignments, 'course': course})
+                                                            
+@login_required
 def submit_assignment(request, assignment_id):
     assignment = Assignment.objects.get(id=assignment_id)
     if request.user.userprofile.user_type != 'Student':
