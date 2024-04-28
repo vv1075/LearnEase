@@ -14,3 +14,4 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Course)
+admin.site.register(Assignment)

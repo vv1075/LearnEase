@@ -13,4 +13,6 @@ urlpatterns = [
     path('dictionary',views.dictionary,name="dictionary"),
     path('youtube',views.youtube,name="youtube"),
     path('courses/', views.course_list, name='course_list'),
+    path('courses/<int:course_id>/assignments/', views.assignment_list, name='assignment_list'),
+    path('courses/<int:course_id>/assignments/create/', views.create_assignment, name='create_assignment'),
 ] 

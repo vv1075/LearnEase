@@ -203,5 +203,23 @@ def course_list(request):
     courses = Course.objects.all()
     return render(request, 'learneaseapp/course_list.html', {'courses': courses})
 
+@login_required
+def create_assignment(request, course_id):
+    course = Course.objects.get(id=course_id)
+    if request.user.userprofile.user_type != 'Professor':
+        return redirect('assignment_list', course_id=course_id)
 
+    students = User.objects.filter(userprofile__user_type='Student')  # Filter students
+    if request.method == 'POST':
+        form = AssignmentForm(request.POST)
+        if form.is_valid():
+            assignment = form.save(commit=False)
+            assignment.course = course
+            assignment.created_by = request.user
+            assignment.save()
+            form.save_m2m()  # Save many-to-many relationships
+            return redirect('assignment_list', course_id=course_id)
+    else:
+        form = AssignmentForm()
+    return render(request, 'learneaseapp/create_assignment.html', {'form': form, 'course': course, 'students': students})
                   
