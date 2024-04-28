@@ -222,4 +222,21 @@ def create_assignment(request, course_id):
     else:
         form = AssignmentForm()
     return render(request, 'learneaseapp/create_assignment.html', {'form': form, 'course': course, 'students': students})
+
+@login_required
+def submit_assignment(request, assignment_id):
+    assignment = Assignment.objects.get(id=assignment_id)
+    if request.user.userprofile.user_type != 'Student':
+        return redirect('assignment_list', course_id=assignment.course.id)
+    if request.method == 'POST':
+        form = SubmissionForm(request.POST, request.FILES)
+        if form.is_valid():
+            submission = form.save(commit=False)
+            submission.assignment = assignment
+            submission.student = request.user
+            submission.save()
+            return redirect('assignment_list', course_id=assignment.course.id)
+    else:
+        form = SubmissionForm()
+    return render(request, 'app/submit_assignment.html', {'form': form, 'assignment': assignment})
                   
