@@ -1,0 +1,17 @@
+{% extends 'learneaseapp/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h2>Create Assignment for {{ course.name }}</h2>
+      <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="hidden" name="assign_all_students" id="id_assign_all_students" value="false">
+        <button type="submit" class="btn btn-primary">Create</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

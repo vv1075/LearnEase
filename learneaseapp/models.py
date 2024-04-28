@@ -37,4 +37,14 @@ class Course(models.Model):
     def __str__(self):
         return self.name
 
-                              
+class Assignment(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now)
+    due_date = models.DateTimeField()
+
+    def __str__(self):
+        return self.title     
+                            

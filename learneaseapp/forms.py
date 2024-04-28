@@ -22,3 +22,10 @@ class UserProfileForm(forms.ModelForm):
 class DashboardForm(forms.Form):
     text = forms.CharField(max_length=100,label="")
  
+class AssignmentForm(forms.ModelForm):
+    students = forms.ModelMultipleChoiceField(queryset=User.objects.filter(userprofile__user_type='Student'))
+    class Meta:
+        model = Assignment
+        fields = ['title', 'description', 'due_date','students']
+        widgets = {
+            'due_date': forms.DateInput(attrs={'type': 'date', 'placeholder': 'YYYY-MM-DD'}),}

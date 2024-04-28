@@ -1,0 +1,71 @@
+{% extends 'learneaseapp/base.html' %}
+{% block content %}
+
+{% if user.userprofile.user_type == 'Professor' %}
+<h2>Assignment List for {{ course.name }}</h2>
+<div class="box">
+    <a href="{% url 'create_assignment' course_id=course.id %}">Create Assignment</a>
+</div>
+<table class="assignment-table">
+    <thead>
+        <tr>
+            <th>Assignment ID</th>
+            <th>Assignment Title</th>
+            <th>Action</th>
+            
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% for assignment in assignments %}
+                <tr>
+                    <td>{{ assignment.id }}</td>
+                    <td><span class="assignment-info" data-title="{{ assignment.title }}" data-description="{{ assignment.description }}">{{ assignment.title }}</span></td>
+                    <td><a href="{% url 'grade_assignment_list' assignment.id %}">Review</a></td>
+                </tr>
+            {% endfor %}
+    </tbody>
+    </table>
+    
+        
+            
+    
+{% elif user.userprofile.user_type == 'Student' %}
+<h2>Assignment List for {{ course.name }}</h2>
+<table class="assignment-table">
+    <thead>
+        <tr>
+            <th>Course ID</th>
+            <th>Course Name</th>
+            <th>Assignment ID</th>
+            <th>Assignment Title</th>
+            <th>Action</th>
+            <th>Grade Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for assignment in assignments %}
+            {% if assignment.id in submitted_assignments %}
+                <tr>
+                    <td>{{ course.id }}</td>
+                    <td>{{ course.name }}</td>
+                    <td>{{ assignment.id }}</td>
+                    <td><span class="assignment-info" data-title="{{ assignment.title }}" data-description="{{ assignment.description }}">{{ assignment.title }}</span></td>
+                    <td>Submitted</td>
+                    <td>{{ assignment.latest_grade_id}}</td> <!-- Assuming you have a grade associated with the assignment -->
+                </tr>
+            {% else %}
+                <tr>
+                    <td>{{ course.id }}</td>
+                    <td>{{ course.name }}</td>
+                    <td>{{ assignment.id }}</td>
+                    <td><span class="assignment-info" data-title="{{ assignment.title }}" data-description="{{ assignment.description }}">{{ assignment.title }}</span></td>
+                    <td><a href="{% url 'submit_assignment' assignment_id=assignment.id %}">Submit</a></td>
+                    <td>{{ grades.score }}</td> <!-- Or any appropriate value for grade score -->
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}
