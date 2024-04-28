@@ -277,5 +277,20 @@ def grade_submission(request, submission_id):
     
     return render(request, 'learneaseapp/grade_submission.html', {'form': form, 'submission': submission, 'assignment': assignment})
 
-
+def grade_assignment_list(request, assignment_id):
+    assignment = get_object_or_404(Assignment, id=assignment_id)
+    submissions = Submission.objects.filter(assignment=assignment)
+    course = assignment.course
+    grades = Grade.objects.filter(student=request.user)
+    
+    # Annotate the latest grade ID for the assignment
+    latest_grade_id = assignment.grade_set.aggregate(Max('id'))['id__max']
+    
+    # Fetch the latest grade object if the latest grade ID exists
+    latest_grade = None
+    if latest_grade_id:
+        latest_grade = Grade.objects.get(id=latest_grade_id)
+    
+    assignments = Assignment.objects.filter(course=course).annotate(latest_grade=Max('grade__score'))
+    return render(request, 'learneaseapp/grade_assignment_list.html', {'assignment': assignment, 'submissions': submissions, 'assignments': assignments,'grades': grades, 'latest_grade': latest_grade})
                   
