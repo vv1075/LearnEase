@@ -56,4 +56,14 @@ class Submission(models.Model):
 
     def _str_(self):
         return f"{self.assignment.title} - {self.student.username}"    
+    
+class Grade(models.Model):
+    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    score = models.DecimalField(max_digits=5, decimal_places=2)
+    graded_by = models.ForeignKey(User, related_name='grader', on_delete=models.CASCADE)
+    graded_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.assignment.title} - {self.student.username}"
                             

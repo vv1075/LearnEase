@@ -238,5 +238,30 @@ def submit_assignment(request, assignment_id):
             return redirect('assignment_list', course_id=assignment.course.id)
     else:
         form = SubmissionForm()
-    return render(request, 'app/submit_assignment.html', {'form': form, 'assignment': assignment})
+    return render(request, 'learneaseapp/submit_assignment.html', {'form': form, 'assignment': assignment})
+
+def grade_submission(request, submission_id):
+    submission = get_object_or_404(Submission, id=submission_id)
+    assignment = submission.assignment
+    
+    # Check if the user is a professor and has the authority to grade the submission
+    if request.user.userprofile.user_type != 'Professor' or assignment.created_by != request.user:
+        return redirect('assignment_list', course_id=assignment.course.id)  # Redirect back to assignment list if unauthorized
+    
+    if request.method == 'POST':
+        form = GradeForm(request.POST)
+        if form.is_valid():
+            grade = form.save(commit=False)
+            grade.assignment = assignment
+            grade.student = submission.student
+            grade.graded_by = request.user  # Assign the current user as the grader
+            grade.save()
+            # Redirect to the assignment details page after grading
+            return redirect('grade_assignment_list', assignment_id=assignment.id)
+    else:
+        form = GradeForm()
+    
+    return render(request, 'learneaseapp/grade_submission.html', {'form': form, 'submission': submission, 'assignment': assignment})
+
+
                   
