@@ -9,6 +9,8 @@ from .forms import *
 from .models import *
 import requests
 from youtubesearchpython import VideosSearch
+from django.db.models import Max
+from django.db.models import F
 
 # Create your views here.
 def home(request):
