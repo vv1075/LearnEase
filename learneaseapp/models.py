@@ -46,5 +46,14 @@ class Assignment(models.Model):
     due_date = models.DateTimeField()
 
     def __str__(self):
-        return self.title     
+        return self.title 
+
+class Submission(models.Model):
+    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='submissions/')
+    submitted_at = models.DateTimeField(default=timezone.now)
+
+    def _str_(self):
+        return f"{self.assignment.title} - {self.student.username}"    
                             

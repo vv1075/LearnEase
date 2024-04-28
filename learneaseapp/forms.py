@@ -29,3 +29,8 @@ class AssignmentForm(forms.ModelForm):
         fields = ['title', 'description', 'due_date','students']
         widgets = {
             'due_date': forms.DateInput(attrs={'type': 'date', 'placeholder': 'YYYY-MM-DD'}),}
+        
+class SubmissionForm(forms.ModelForm):
+    class Meta:
+        model = Submission
+        fields = ['file']
