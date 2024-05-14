@@ -22,3 +22,25 @@ class AssignmentModelTestCase(TestCase):
             due_date=timezone.now()
         )
         self.assertEqual(assignment.title, 'Test Assignment')
+
+class SubmissionModelTestCase(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username='testuser', password='password')
+        self.course = Course.objects.create(name='Test Course')
+        self.assignment = Assignment.objects.create(
+            title='Test Assignment',
+            description='Test Description',
+            course=self.course,
+            created_by=self.user,
+            due_date=timezone.now()
+        )
+    
+    def test_submission_creation(self):
+        submission = Submission.objects.create(
+            assignment=self.assignment,
+            student=self.user,
+            file='test_submission_file.txt',
+            submitted_at=timezone.now()
+        )
+        self.assertEqual(submission.student, self.user)
+                         
