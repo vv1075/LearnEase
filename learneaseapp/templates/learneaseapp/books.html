@@ -1,23 +1,25 @@
-{% extends 'app/base.html' %} 
-{% load static %} 
-{% block content %}
+{% extends 'learneaseapp/base.html' %}
+{% load static %}
 
+{% block content %}
 <section class="container">
     <div class="text-center mb-5">
         <h2 class="font-weight-bold">Welcome {{ request.user.last_name }}</h2>
+    </div>
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <form action="" method="post">
+            <form id="booksForm" method="post">
                 {% csrf_token %}
                 <span>Enter your books:</span>
                 {{ form }}
-                <button class="btn btn-danger" type="submit">Search</button>
+                <button id="searchBtn" class="btn btn-danger" type="button">Search</button>
             </form>
         </div>
     </div>
-</div>
-
-    <div class="row mt-5">
+    <div class="box">
+        <a href="{% url 'saved_books' %}">Your books</a>
+    </div>
+    <div id="searchResults" class="row mt-5">
         {% for result in results %}
         <div class="col-md-6 mb-4">
             <div class="card h-100">
@@ -46,10 +48,91 @@
                         {% endif %}
                     </p>
                 </div>
+                <div class="card-footer">
+                    <form action="{% url 'save_book' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="title" value="{{ result.title }}">
+                        <input type="hidden" name="subtitle" value="{{ result.subtitle }}">
+                        <input type="hidden" name="description" value="{{ result.description }}">
+                        <input type="hidden" name="count" value="{{ result.count }}">
+                        <input type="hidden" name="categories" value="{{ result.categories }}">
+                        <input type="hidden" name="rating" value="{{ result.rating }}">
+                        <input type="hidden" name="thumbnail" value="{{ result.thumbnail }}">
+                        <input type="hidden" name="preview" value="{{ result.preview }}">
+                        <button class="btn btn-primary" type="submit">Save</button>
+                    </form>
+                </div>
             </div>
         </div>
         {% endfor %}
     </div>
 </section>
 
-{% endblock content %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $("#searchBtn").click(function() {
+        var text = $("#id_text").val();
+        $.ajax({
+            type: "POST",
+            url: "{% url 'books' %}",
+            data: {
+                'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+                'text': text
+            },
+            success: function(data) {
+                // Clear previous search results
+                $("#searchResults").empty();
+                
+                // Display new search results
+                if (data.results && data.results.length > 0) {
+                    $.each(data.results, function(index, result) {
+                        var resultHtml = `
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <a href="${result.preview}" target="_blank">
+                                            <img class="img-fluid" src="${result.thumbnail}" alt="">
+                                        </a>
+                                        <h5 class="card-title">${result.title}</h5>
+                                        <p class="card-text">${result.subtitle}</p>
+                                        ${result.description ? `<p class="card-text">${result.description}</p>` : ''}
+                                        <p class="card-text">
+                                            ${result.categories ? `<strong>Categories:</strong> ${result.categories.join(', ')}<br>` : ''}
+                                            ${result.count ? `<strong>Pages:</strong> ${result.count}<br>` : ''}
+                                            ${result.rating ? `<strong>Rating:</strong> ${result.rating}<br>` : ''}
+                                        </p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <form action="{% url 'save_book' %}" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="title" value="${result.title}">
+                                            <input type="hidden" name="subtitle" value="${result.subtitle}">
+                                            <input type="hidden" name="description" value="${result.description}">
+                                            <input type="hidden" name="count" value="${result.count}">
+                                            <input type="hidden" name="categories" value="${result.categories}">
+                                            <input type="hidden" name="rating" value="${result.rating}">
+                                            <input type="hidden" name="thumbnail" value="${result.thumbnail}">
+                                            <input type="hidden" name="preview" value="${result.preview}">
+                                            <button class="btn btn-primary" type="submit">Save</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        $("#searchResults").append(resultHtml);
+                    });
+                } else {
+                    $("#searchResults").html('<p>No results found.</p>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                $("#searchResults").html('<p>Error: Failed to fetch search results.</p>');
+            }
+        });
+    });
+});
+</script>
+
+{% endblock %}

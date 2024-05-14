@@ -74,30 +74,40 @@ def update_profile(request):
 
 def books(request):
     if request.method == "POST":
-        form = DashboardForm(request.POST)
-        text = request.POST.get('text', '')  # Use get() method to safely retrieve 'text' parameter
-        url = "https://www.googleapis.com/books/v1/volumes?q="+text
-        r= requests.get(url)
-        answer = r.json()
-        result_list = []
-        for i in range(10):
-            result_dict = {
-                'title': answer['items'][i]['volumeInfo']['title'],
-                'subtitle': answer['items'][i]['volumeInfo'].get('subtitle'),
-                'description': answer['items'][i]['volumeInfo'].get('description'),
-                'count': answer['items'][i]['volumeInfo'].get('pageCount'),
-                'categories': answer['items'][i]['volumeInfo'].get('categories'),
-                'rating': answer['items'][i]['volumeInfo'].get('pageRating'),
-                'thumbnail': answer['items'][i]['volumeInfo'].get('imageLinks').get('thumbnail'),
-                'preview': answer['items'][i]['volumeInfo'].get('previewLink'),
-                 
-            }
-            result_list.append(result_dict)
-            context = {
-            'form': form,
-            'results': result_list
-            }
-        return render(request, 'learneaseapp/books.html', context)
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':  # Check if it's an Ajax request
+            form = DashboardForm(request.POST)
+            if form.is_valid():
+                text = form.cleaned_data['text']
+                url = "https://www.googleapis.com/books/v1/volumes?q=" + text
+                r = requests.get(url)
+                if r.status_code == 200:
+                    answer = r.json()
+                    result_list = []
+                    if 'items' in answer:
+                        for item in answer['items'][:10]:
+                            volume_info = item.get('volumeInfo', {})
+                            result_dict = {
+                                'title': volume_info.get('title'),
+                                'subtitle': volume_info.get('subtitle'),
+                                'description': volume_info.get('description'),
+                                'count': volume_info.get('pageCount'),
+                                'categories': volume_info.get('categories'),
+                                'rating': volume_info.get('pageRating'),
+                                'thumbnail': volume_info.get('imageLinks', {}).get('thumbnail'),
+                                'preview': volume_info.get('previewLink'),
+                            }
+                            result_list.append(result_dict)
+                    else:
+                        result_list = []  # No items found
+                    return JsonResponse({'results': result_list})
+                else:
+                    return JsonResponse({'error': 'Failed to fetch data from Google Books API'}, status=500)
+            else:
+                return JsonResponse({'error': 'Form is not valid'}, status=400)
+        else:
+            form = DashboardForm(request.POST)
+            context = {'form': form}
+            return render(request, "learneaseapp/books.html", context)
     else:
         form = DashboardForm()
         context = {'form': form}
