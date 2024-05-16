@@ -17,4 +17,7 @@ urlpatterns = [
     path('courses/<int:course_id>/assignments/create/', views.create_assignment, name='create_assignment'),
     path('assignments/<int:assignment_id>/submit/', views.submit_assignment, name='submit_assignment'),
     path('submissions/<int:submission_id>/grade/', views.grade_submission, name='grade_submission'),
+    path('notes',views.notes,name="notes"),
+    path('delete_note/<int:pk>', views.delete_note, name='delete-note'),
+    path('notes_detail/<int:pk>', views.NotesDetailsView.as_view(), name='notes-detail'),
 ] 
