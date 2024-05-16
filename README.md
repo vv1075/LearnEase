@@ -11,19 +11,21 @@ Getting started on Windows:
 3. Activate the taskerr conda environment:
 
 	pip install djangorestframework
+	pip install youtube-search-python
+	python -m pip install Pillow
 
-4. Run migrations:
+5. Run migrations:
 
 	python manage.py migrate
 
-5. Create the superuser to log on:
+6. Create the superuser to log on:
 
 	python manage.py createsuperuser
 
 	If you get a TTY error: 
 
 	winpty python manage.py createsuperuser
-6. Create a course through admin page
-7. Launch the Website.  You will be directed to log on.  After you log on, you should be directed to the main page for learnease.  If not, click on visit site.
-8. Explore the Site 
+7. Create a course through admin page
+8. Launch the Website.  You will be directed to log on.  After you log on, you should be directed to the main page for learnease.  If not, click on visit site.
+9. Explore the Site 
 Thankyou
