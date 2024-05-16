@@ -1,0 +1,86 @@
+.alert-debug {
+  color: black;
+  background-color: white;
+  border-color: #d6e9c6;
+}
+
+.alert-error {
+  color: #b94a48;
+  background-color: #f2dede;
+  border-color: #eed3d7;
+}
+
+.assignment-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.assignment-table th, .assignment-table td {
+  border: 1px solid #181616;
+  text-align: left;
+  padding: 8px;
+}
+
+.assignment-table th {
+  background-color: #515b5a;
+}
+
+.assignment-info {
+  position: relative;
+  cursor: pointer;
+}
+
+.assignment-info::after {
+  content: "Description: " attr(data-description);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  border: 1px solid #100b0b;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  display: none;
+  text-align: center;
+  width: max-content;
+}
+
+.assignment-info:hover::after {
+  display: block;
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  z-index: 9999;
+}
+.center-table {
+  margin: 0 auto; /* This will center the table horizontally */
+  width: 50%; /* Adjust the width of the table as per your requirement */
+}
+
+.bg-bluesh-black {
+  background-color: #091921; /* Blusish black color code */
+}
+.box {
+  border: 1px solid #ccc; /* border style */
+  padding: 10px; /* spacing inside the box */
+  border-radius: 5px; /* rounded corners */
+  display: inline-block; /* to fit the content */
+  position: absolute; /* positioning */
+  top: 17%; /* adjust top position */
+  right: 20px; /* adjust right position */
+  transform: translateY(-50%); /* center vertically */
+}
+
+.modal-top {
+  top: 0%;
+}
+
+

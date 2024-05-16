@@ -28,7 +28,8 @@ def registration(request):
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
-            return HttpResponse("<h1>Registration successfully</h1>")
+            return redirect('login')
+            #return HttpResponse("<h1>Registration successfully</h1>")
         
         
     else:
@@ -68,6 +69,7 @@ def update_profile(request):
             profile = form.save(commit=False)
             profile.user = request.user
             profile.save()
+            request.session['profile_updated'] = True
             return redirect('profile')
     else:
         form = UserProfileForm(instance=profile)
