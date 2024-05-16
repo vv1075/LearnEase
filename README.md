@@ -11,8 +11,10 @@ Getting started on Windows:
 3. Activate the taskerr conda environment:
 
 	pip install djangorestframework
+
 	pip install youtube-search-python
-	python -m pip install Pillow
+
+	python -m pip install Pillow 
 
 5. Run migrations:
 
