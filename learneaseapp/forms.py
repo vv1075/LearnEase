@@ -39,3 +39,7 @@ class GradeForm(forms.ModelForm):
     class Meta:
         model = Grade
         fields = ['score']
+class NotesForm(forms.ModelForm):
+    class Meta:
+        model = Notess
+        fields = ['title','description']

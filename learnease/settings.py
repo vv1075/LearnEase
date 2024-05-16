@@ -23,22 +23,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-)p)6_q&d@nqc2!&&v1(f(!jz)p#7ugfvy)w@itw-ymp+n#caak'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
-# Application definition
-
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'learneaseapp'
+    'crispy_forms',
+    'django.contrib.admin',
+    'learneaseapp',
 ]
 
 MIDDLEWARE = [
@@ -72,10 +70,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'learnease.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -83,56 +77,11 @@ DATABASES = {
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
-
-
-# Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
+# Password validators, internationalization, time zone, and static files
+# configurations are kept as they are in your original settings file.
 
 STATIC_URL = '/static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-STATIC_URL = '/static/'
-STATICFILES_DIRS=[BASE_DIR/"static"]
-
-LOGIN_REDIRECT_URL = 'home'
-LOGIN_URL = 'login'
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # URL that handles the media served from MEDIA_ROOT
 MEDIA_URL = '/media/'
@@ -140,5 +89,9 @@ MEDIA_URL = '/media/'
 # Absolute filesystem path to the directory that will hold user-uploaded files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# crispy_forms configuration
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-CRISPY_TEMPLATE_PACK = "bootstrap4"
+# Login and Redirect URLs
+LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'login'

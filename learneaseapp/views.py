@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, redirect, get_object_or_404 
+from django.shortcuts import render, HttpResponse,  redirect, get_object_or_404
 from .forms import UserRegistrationform, UserProfileForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -7,10 +7,11 @@ from .forms import AssignmentForm, SubmissionForm, GradeForm
 from django.views import generic
 from .forms import *
 from .models import *
-import requests
 from youtubesearchpython import VideosSearch
+import requests
 from django.db.models import Max
 from django.db.models import F
+import json
 from django.http import JsonResponse
 
 # Create your views here.
@@ -308,4 +309,24 @@ def grade_assignment_list(request, assignment_id):
     
     assignments = Assignment.objects.filter(course=course).annotate(latest_grade=Max('grade__score'))
     return render(request, 'learneaseapp/grade_assignment_list.html', {'assignment': assignment, 'submissions': submissions, 'assignments': assignments,'grades': grades, 'latest_grade': latest_grade})
-                  
+
+def notes(request):
+    if request .method =="POST":
+        form = NotesForm(request.POST)
+        if form.is_valid():
+            notes = Notess(user=request.user,title = request.POST['title'],description = request.POST['description'])
+            notes.save()
+        messages.success(request,f"Notes Added from {request.user.username} Successfully!")
+        return redirect('notes')
+    else:
+        form = NotesForm()
+        notes = Notess.objects.filter(user=request.user)
+        context = {'notes':notes,'form':form}
+        return render(request,'learneaseapp/notes.html',context)
+    
+def delete_note(request,pk=None):
+    Notess.objects.get(id=pk).delete()
+    return redirect("notes")
+
+class NotesDetailsView(generic.DetailView):
+    model = Notess             
