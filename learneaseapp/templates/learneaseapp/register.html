@@ -2,24 +2,141 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="container">
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <fieldset class="form-group">
-      <legend class="border-bottom mb-4">Join Today</legend>
-      {{user_form|crispy}}
-      {{profile_form|crispy}}
-    </fieldset>
-    <div class="form-group">
-      <button class="btn btn-outline-info" type="submit">
-        Sign Up
-      </button>
-    </div>
-  </form>
-  <div class="border-top pt-3">
-    <small class="text-muted">Already have an account?
-      <a class="ml-2" href="{%url 'login' %}">Sign In</a>
-    </small>
+
+<style>
+  .register-container {
+    display: flex;
+    height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+  }
+
+  .left-panel {
+    width: 50%;
+    background-color: #7d9efb;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+    text-align: center;
+    padding: 50px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+
+  .left-panel h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+
+  .left-panel p {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .left-panel a.login-btn {
+    padding: 10px 24px;
+    background: none;
+    border: 2px solid white;
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s ease;
+  }
+
+  .left-panel a.login-btn:hover {
+    background-color: white;
+    color: #7d9efb;
+  }
+
+  .right-panel {
+    width: 50%;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 60px;
+    box-sizing: border-box;
+  }
+
+  .right-panel h2 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+
+  .register-form input,
+  .register-form select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+
+  .register-form button {
+    background-color: #7d9efb;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    margin-top: 15px;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .register-form button:hover {
+    background-color: #5f7ee6;
+  }
+
+  .register-form small {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .register-form small a {
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  .register-form small a:hover {
+    text-decoration: underline;
+  }
+
+  /* Optional: Hide right-panel scrollbar for better aesthetics */
+  .right-panel::-webkit-scrollbar {
+    width: 6px;
+  }
+  .right-panel::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 5px;
+  }
+</style>
+
+<div class="register-container">
+  <!-- Left Welcome Panel -->
+  <div class="left-panel">
+    <h1>Welcome!</h1>
+    <p>Already have an account?</p>
+    <a href="{% url 'login' %}" class="login-btn">Sign In</a>
+  </div>
+
+  <!-- Right Register Form Panel -->
+  <div class="right-panel">
+    <h2>Create Your Account</h2>
+    <form method="POST" enctype="multipart/form-data" class="register-form">
+      {% csrf_token %}
+      {{ user_form|crispy }}
+      {{ profile_form|crispy }}
+      <button type="submit">Sign Up</button>
+      <small class="text-muted">Already registered? <a href="{% url 'login' %}">Sign In</a></small>
+    </form>
   </div>
 </div>
-{% endblock content %}
+
+{% endblock %}

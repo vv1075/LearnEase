@@ -1,71 +1,169 @@
 {% extends 'learneaseapp/base.html' %}
 {% block content %}
 
-{% if user.userprofile.user_type == 'Professor' %}
-<h2>Assignment List for {{ course.name }}</h2>
-<div class="box">
-    <a href="{% url 'create_assignment' course_id=course.id %}">Create Assignment</a>
-</div>
-<table class="assignment-table">
-    <thead>
+<style>
+  h2 {
+    font-weight: bold;
+    font-size: 28px;
+    margin-bottom: 25px;
+    text-align: center;
+  }
+
+  .assignment-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 20px;
+  }
+
+  .assignment-table th {
+    background-color: #007bff;
+    color: white;
+    padding: 15px;
+    font-size: 16px;
+    text-align: left;
+  }
+
+  .assignment-table td {
+    padding: 14px;
+    border-bottom: 1px solid #ddd;
+    font-size: 15px;
+  }
+
+  .assignment-table tr:hover {
+    background-color: #f7faff;
+  }
+
+  .box a {
+    display: inline-block;
+    margin-bottom: 20px;
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .box a:hover {
+    background-color: #218838;
+  }
+
+  .action-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .action-btn:hover {
+    background-color: #0056b3;
+  }
+
+  .status-text {
+    font-weight: bold;
+    color: green;
+  }
+
+  .submitted-row {
+    background-color: #e6f7ea;
+  }
+
+  .assignment-info {
+    font-weight: 500;
+    cursor: pointer;
+  }
+</style>
+
+<div class="container">
+  {% if user.userprofile.user_type == 'Professor' %}
+    <h2>📚 Assignments for {{ course.name }}</h2>
+
+    <div class="box">
+      <a href="{% url 'create_assignment' course_id=course.id %}">➕ Create New Assignment</a>
+    </div>
+
+    <table class="assignment-table">
+      <thead>
         <tr>
-            <th>Assignment ID</th>
-            <th>Assignment Title</th>
-            <th>Action</th>
-            
-            
+          <th>Assignment ID</th>
+          <th>Assignment Title</th>
+          <th>Action</th>
         </tr>
-    </thead>
-    <tbody>
+      </thead>
+      <tbody>
         {% for assignment in assignments %}
-                <tr>
-                    <td>{{ assignment.id }}</td>
-                    <td><span class="assignment-info" data-title="{{ assignment.title }}" data-description="{{ assignment.description }}">{{ assignment.title }}</span></td>
-                    <td><a href="{% url 'grade_assignment_list' assignment.id %}">Review</a></td>
-                </tr>
-            {% endfor %}
-    </tbody>
-    </table>
-    
-        
-            
-    
-{% elif user.userprofile.user_type == 'Student' %}
-<h2>Assignment List for {{ course.name }}</h2>
-<table class="assignment-table">
-    <thead>
-        <tr>
-            <th>Course ID</th>
-            <th>Course Name</th>
-            <th>Assignment ID</th>
-            <th>Assignment Title</th>
-            <th>Action</th>
-            <th>Grade Score</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for assignment in assignments %}
-            {% if assignment.id in submitted_assignments %}
-                <tr>
-                    <td>{{ course.id }}</td>
-                    <td>{{ course.name }}</td>
-                    <td>{{ assignment.id }}</td>
-                    <td><span class="assignment-info" data-title="{{ assignment.title }}" data-description="{{ assignment.description }}">{{ assignment.title }}</span></td>
-                    <td>Submitted</td>
-                    <td>{{ assignment.latest_grade_id}}</td> <!-- Assuming you have a grade associated with the assignment -->
-                </tr>
-            {% else %}
-                <tr>
-                    <td>{{ course.id }}</td>
-                    <td>{{ course.name }}</td>
-                    <td>{{ assignment.id }}</td>
-                    <td><span class="assignment-info" data-title="{{ assignment.title }}" data-description="{{ assignment.description }}">{{ assignment.title }}</span></td>
-                    <td><a href="{% url 'submit_assignment' assignment_id=assignment.id %}">Submit</a></td>
-                    <td>{{ grades.score }}</td> <!-- Or any appropriate value for grade score -->
-                </tr>
-            {% endif %}
+          <tr>
+            <td>{{ assignment.id }}</td>
+            <td>
+              <span class="assignment-info" data-title="{{ assignment.title }}" data-description="{{ assignment.description }}">
+                {{ assignment.title }}
+              </span>
+            </td>
+            <td>
+              <a href="{% url 'grade_assignment_list' assignment.id %}" class="action-btn">🔍 Review</a>
+            </td>
+          </tr>
         {% endfor %}
-    </tbody>
-</table>
-{% endif %}
+      </tbody>
+    </table>
+
+  {% elif user.userprofile.user_type == 'Student' %}
+    <h2>📘 Your Assignments - {{ course.name }}</h2>
+
+    <table class="assignment-table">
+      <thead>
+        <tr>
+          <th>Course ID</th>
+          <th>Course Name</th>
+          <th>Assignment ID</th>
+          <th>Assignment Title</th>
+          <th>Status</th>
+          <th>Grade Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for assignment in assignments %}
+          {% if assignment.id in submitted_assignments %}
+            <tr class="submitted-row">
+              <td>{{ course.id }}</td>
+              <td>{{ course.name }}</td>
+              <td>{{ assignment.id }}</td>
+              <td>
+                <span class="assignment-info" data-title="{{ assignment.title }}" data-description="{{ assignment.description }}">
+                  {{ assignment.title }}
+                </span>
+              </td>
+              <td><span class="status-text">✅ Submitted</span></td>
+              <td>{{ assignment.latest_grade_id }}</td>
+            </tr>
+          {% else %}
+            <tr>
+              <td>{{ course.id }}</td>
+              <td>{{ course.name }}</td>
+              <td>{{ assignment.id }}</td>
+              <td>
+                <span class="assignment-info" data-title="{{ assignment.title }}" data-description="{{ assignment.description }}">
+                  {{ assignment.title }}
+                </span>
+              </td>
+              <td>
+                <a href="{% url 'submit_assignment' assignment_id=assignment.id %}" class="action-btn">📤 Submit</a>
+              </td>
+              <td>{{ grades.score }}</td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+</div>
+
 {% endblock %}

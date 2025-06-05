@@ -1,0 +1,30 @@
+{% extends 'learneaseapp/base.html' %}
+
+{% block content %}
+<div style="max-width: 800px; margin: auto; padding: 20px;">
+    <h2>Edit Quiz: {{ quiz.name }}</h2>
+    
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <div id="questions-container">
+            {% for question in quiz.questions.all %}
+                <div class="question">
+                    <label for="question_{{ question.id }}">Question: </label>
+                    <input type="text" name="question_{{ question.id }}" value="{{ question.text }}" required>
+                    
+                    {% for option in question.options %}
+                        <input type="text" name="option_{{ option.id }}" value="{{ option }}" required>
+                    {% endfor %}
+                    
+                    <label for="correct_answer_{{ question.id }}">Correct Answer: </label>
+                    <input type="text" name="correct_answer_{{ question.id }}" value="{{ question.correct }}" required>
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit">Save Changes</button>
+    </form>
+</div>
+{% endblock %}

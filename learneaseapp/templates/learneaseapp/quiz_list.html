@@ -1,0 +1,439 @@
+{% extends 'learneaseapp/base.html' %}
+{% block content %}
+
+<style>
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+  }
+
+  .modal-content {
+    background: white;
+    margin: 60px auto;
+    padding: 25px 30px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 900px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .close-btn {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+  }
+
+  .blurred {
+    filter: blur(4px);
+    pointer-events: none;
+  }
+
+  .search-bar input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+
+  .create-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 10px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .view-btn {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .action-link {
+    color: #007bff;
+    text-decoration: none;
+    margin-right: 12px;
+    font-weight: 500;
+  }
+
+  .score-label {
+    font-weight: bold;
+    color: green;
+  }
+
+  .status-label {
+    color: gray;
+    font-weight: 500;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+  }
+
+  table, th, td {
+    border: 1px solid #ccc;
+  }
+
+  th, td {
+    padding: 12px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f4f4f4;
+  }
+
+  .question-box {
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+  }
+
+  input[type="text"], input[type="number"], select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+
+  .btn {
+    padding: 10px 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 8px;
+  }
+
+  .submit-btn {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  .cancel-btn {
+    background-color: #ccc;
+    color: #333;
+  }
+
+  .add-btn {
+    background-color: #007bff;
+    color: white;
+    margin-top: 10px;
+  }
+</style>
+
+<h2 style="margin-bottom: 20px;">📚 Quiz Management</h2>
+
+<div class="search-bar">
+  <input type="text" id="searchBox" placeholder="🔍 Search quizzes..." onkeyup="filterQuizzes()">
+</div>
+
+<div id="quiz-section">
+  {% if user.userprofile.user_type == "Professor" %}
+    <button class="create-btn" onclick="openCreateQuizModal()">➕ Create New Quiz</button>
+    <button class="create-btn view-btn" onclick="openGenerateAIModal()">🤖 Generate AI Quiz</button>
+    <button class="create-btn view-btn" onclick="openModal()">📄 View Submissions</button>
+  {% endif %}
+
+  <table id="quizTable">
+    <thead>
+      <tr>
+        <th>Quiz Title</th>
+        {% if user.userprofile.user_type == "Student" %}
+          <th>Your Score</th>
+          <th>Status</th>
+        {% else %}
+        <th>Status</th> <!-- 👈 Add this -->
+        <th>Actions</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for quiz in quizzes %}
+        <tr>
+          <td>{{ quiz.title }}</td>
+          {% if user.userprofile.user_type == "Student" %}
+            <td>
+              {% if quiz.score_info %}
+                <span class="score-label">{{ quiz.score_info }}</span>
+              {% else %}
+                -
+              {% endif %}
+            </td>
+            <td>
+              {% if quiz.can_take %}
+                <a href="/quizzes/{{ quiz.id }}/take/" class="action-link">📝 Take Quiz</a>
+              {% else %}
+                <span class="status-label">✅ Submitted</span>
+              {% endif %}
+            </td>
+          {% else %}
+          <td>{{ quiz.status|capfirst }}</td>
+          <td>
+            <a href="/quizzes/{{ quiz.id }}/" class="action-link">✏️ Edit</a>
+            <a href="/quizzes/{{ quiz.id }}/delete/" class="action-link" onclick="return confirm('Delete this quiz?');">🗑️ Delete</a>
+          </td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- ✅ SUBMISSIONS MODAL -->
+<div id="submissionModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <h3 style="text-align: center; margin-bottom: 15px;">📊 Student Quiz Submissions</h3>
+    <table class="submission-table">
+      <thead>
+        <tr>
+          <th>👤 Student</th>
+          <th>📚 Quiz</th>
+          <th>🎯 Score</th>
+        </tr>
+      </thead>
+      <tbody id="submissionTableBody">
+        <!-- Filled by JS -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ✅ CREATE QUIZ MODAL -->
+<div id="createQuizModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeCreateQuizModal()">&times;</span>
+    <h3 style="text-align: center; margin-bottom: 15px;">📝 Create New Quiz</h3>
+    {% if course %}
+  <form method="POST" action="{% url 'create_quiz' course.id %}">
+{% else %}
+  <form method="POST" action="#">
+{% endif %}
+      {% csrf_token %}
+      <label>Quiz Title:</label>
+      <input type="text" name="quiz_title" required>
+      <input type="hidden" id="total_questions" name="total_questions" value="1">
+
+      <div id="questions-container">
+        <div class="question-box">
+          <h4>Question 1</h4>
+          <input type="text" name="question_0" placeholder="Question Text" required>
+          <input type="text" name="option_0_1" placeholder="Option 1" required>
+          <input type="text" name="option_0_2" placeholder="Option 2" required>
+          <input type="text" name="option_0_3" placeholder="Option 3" required>
+          <input type="text" name="option_0_4" placeholder="Option 4" required>
+          <label>Correct Option Index:</label>
+          <select name="correct_0" required>
+            <option value="0">Option 1</option>
+            <option value="1">Option 2</option>
+            <option value="2">Option 3</option>
+            <option value="3">Option 4</option>
+          </select>
+          <input type="number" name="marks_0" placeholder="Marks for this question" required>
+        </div>
+      </div>
+
+      <button type="button" class="btn add-btn" onclick="addQuestion()">➕ Add Question</button>
+
+      <div style="margin-top:15px;">
+        <label>Assign to Students:</label><br>
+        {% for student in students %}
+          <input type="checkbox" name="assigned_students" value="{{ student.id }}"> {{ student.username }}<br>
+        {% endfor %}
+      </div>
+
+      <div style="margin-top:20px;">
+        <button type="submit" class="btn submit-btn">✅ Create Quiz</button>
+        
+      </div>
+    </form>
+  </div>
+</div>
+<!-- ✅ AI QUIZ GENERATOR MODAL START -->
+<div id="generateAIModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeGenerateAIModal()">&times;</span>
+    <h3 style="text-align: center; margin-bottom: 15px;">🤖 Generate AI Quiz</h3>
+    
+    <form id="aiQuizForm">
+      <label>Topic:</label>
+      <input type="text" id="ai_topic" placeholder="e.g., Networking Basics" required>
+
+      <label>Number of Questions:</label>
+      <input type="number" id="ai_num_questions" required>
+
+      <label>Total Marks:</label>
+      <input type="number" id="ai_total_marks" required>
+
+      <label>Select Course:</label>
+      <select id="ai_course_id" required>
+        <option value="">-- Select Course --</option>
+        {% for course in courses %}
+          <option value="{{ course.id }}">{{ course.name }}</option>
+        {% endfor %}
+      </select>
+
+      <div style="margin-top:20px;">
+        <button type="button" class="btn submit-btn" onclick="generateAIQuiz('draft')">💬 Draft</button>
+        <button type="button" class="btn submit-btn" onclick="generateAIQuiz('saved')">✅ Save</button>
+        <button type="button" class="btn cancel-btn" onclick="closeGenerateAIModal()">❌ Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- ✅ AI QUIZ GENERATOR MODAL END -->
+
+<!-- ✅ JAVASCRIPT -->
+<script>
+  let questionCount = 1;
+
+  function addQuestion() {
+    const container = document.getElementById('questions-container');
+    const div = document.createElement('div');
+    div.classList.add('question-box');
+    div.innerHTML = `
+      <h4>Question ${questionCount + 1}</h4>
+      <input type="text" name="question_${questionCount}" placeholder="Question Text" required>
+      <input type="text" name="option_${questionCount}_1" placeholder="Option 1" required>
+      <input type="text" name="option_${questionCount}_2" placeholder="Option 2" required>
+      <input type="text" name="option_${questionCount}_3" placeholder="Option 3" required>
+      <input type="text" name="option_${questionCount}_4" placeholder="Option 4" required>
+      <label>Correct Option Index:</label>
+      <select name="correct_${questionCount}" required>
+        <option value="0">Option 1</option>
+        <option value="1">Option 2</option>
+        <option value="2">Option 3</option>
+        <option value="3">Option 4</option>
+      </select>
+      <input type="number" name="marks_${questionCount}" placeholder="Marks for this question" required>
+    `;
+    container.appendChild(div);
+    document.getElementById('total_questions').value = ++questionCount;
+  }
+
+  function openCreateQuizModal() {
+    document.getElementById("createQuizModal").style.display = "block";
+    document.getElementById("quiz-section").classList.add("blurred");
+  }
+
+  function closeCreateQuizModal() {
+    document.getElementById("createQuizModal").style.display = "none";
+    document.getElementById("quiz-section").classList.remove("blurred");
+  }
+
+  function openModal() {
+    document.getElementById("submissionModal").style.display = "block";
+    document.getElementById("quiz-section").classList.add("blurred");
+    fetchSubmissions();
+  }
+
+  function closeModal() {
+    document.getElementById("submissionModal").style.display = "none";
+    document.getElementById("quiz-section").classList.remove("blurred");
+  }
+
+  function fetchSubmissions() {
+    fetch("/quizzes/submissions/json/")
+      .then(response => response.json())
+      .then(data => {
+        const tbody = document.getElementById("submissionTableBody");
+        tbody.innerHTML = "";
+
+        if (data.length === 0) {
+          tbody.innerHTML = "<tr><td colspan='3' style='text-align:center; color:gray;'>No submissions yet.</td></tr>";
+          return;
+        }
+
+        data.forEach(record => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${record.student}</td>
+            <td>${record.quiz_title}</td>
+            <td style="color:green; font-weight:bold;">${record.score} / ${record.max_score}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      })
+      .catch(err => {
+        console.error("Error loading submissions:", err);
+      });
+  }
+
+  function filterQuizzes() {
+    const input = document.getElementById("searchBox").value.toLowerCase();
+    const rows = document.querySelectorAll("#quizTable tbody tr");
+
+    rows.forEach(row => {
+      const title = row.querySelector("td").textContent.toLowerCase();
+      row.style.display = title.includes(input) ? "" : "none";
+    });
+  }
+  function openGenerateAIModal() {
+  document.getElementById("generateAIModal").style.display = "block";
+  document.getElementById("quiz-section").classList.add("blurred");
+}
+
+function closeGenerateAIModal() {
+  document.getElementById("generateAIModal").style.display = "none";
+  document.getElementById("quiz-section").classList.remove("blurred");
+}
+
+function generateAIQuiz(status) {
+  const topic = document.getElementById("ai_topic").value;
+  const num_questions = parseInt(document.getElementById("ai_num_questions").value);
+  const total_marks = parseInt(document.getElementById("ai_total_marks").value);
+  const course_id = document.getElementById("ai_course_id").value;
+
+  const payload = {
+    title: "AI Quiz on " + topic,
+    topic: topic,
+    num_questions: num_questions,
+    total_marks: total_marks,
+    course_id: course_id,
+    status: status
+  };
+
+  fetch("http://127.0.0.1:8080/generate-ai-quiz", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert(`✅ Quiz ${status === 'saved' ? 'Saved' : 'Generated as Draft'}: ${data.title}`);
+    closeGenerateAIModal();
+
+    if (status === "saved") {
+      window.location.href = "/quizzes/";
+    } else if (status === "draft") {
+      window.location.href = `/quizzes/${data.id}/`; // 👉 Redirect to edit page
+    }
+  })
+  .catch(err => {
+    console.error("Error generating quiz:", err);
+    alert("Something went wrong!");
+  });
+}
+</script>
+
+{% endblock %}

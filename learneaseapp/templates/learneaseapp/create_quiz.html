@@ -1,0 +1,76 @@
+{% extends 'learneaseapp/base.html' %}
+{% block content %}
+<h2>📝 Create a New Quiz</h2>
+
+<form method="POST">
+  {% csrf_token %}
+
+  <label>Quiz Title:</label>
+  <input type="text" name="quiz_title" required><br><br>
+
+  <p><strong>Course:</strong> {{ course.name }}</p>
+
+  <input type="hidden" id="total_questions" name="total_questions" value="1">
+
+  <div id="questions-container">
+    <div class="question-box">
+      <h4>Question 1</h4>
+      <input type="text" name="question_0" placeholder="Question Text" required><br>
+      <input type="text" name="option_0_1" placeholder="Option 1" required><br>
+      <input type="text" name="option_0_2" placeholder="Option 2" required><br>
+      <input type="text" name="option_0_3" placeholder="Option 3" required><br>
+      <input type="text" name="option_0_4" placeholder="Option 4" required><br>
+
+      <label>Correct Option Index:</label>
+      <select name="correct_0" required>
+        <option value="0">Option 1</option>
+        <option value="1">Option 2</option>
+        <option value="2">Option 3</option>
+        <option value="3">Option 4</option>
+      </select><br>
+
+      <input type="number" name="marks_0" placeholder="Marks for this question" required><br><br>
+    </div>
+  </div>
+
+  <button type="button" onclick="addQuestion()">➕ Add Another Question</button><br><br>
+
+  <label>Assign Quiz to Students:</label><br>
+  {% for student in students %}
+    <input type="checkbox" name="assigned_students" value="{{ student.id }}"> {{ student.username }}<br>
+  {% endfor %}
+
+  <br>
+  <button type="submit">✅ Create Quiz</button>
+  <a href="/courses/{{ course.id }}/quizzes/" style="padding: 6px 15px; background: gray; color: white; text-decoration: none; border-radius: 5px;">❌ Cancel</a>
+
+</form>
+
+<script>
+  let questionCount = 1;
+  function addQuestion() {
+    const container = document.getElementById('questions-container');
+    const div = document.createElement('div');
+    div.classList.add('question-box');
+    div.innerHTML = `
+      <h4>Question ${questionCount + 1}</h4>
+      <input type="text" name="question_${questionCount}" placeholder="Question Text" required><br>
+      <input type="text" name="option_${questionCount}_1" placeholder="Option 1" required><br>
+      <input type="text" name="option_${questionCount}_2" placeholder="Option 2" required><br>
+      <input type="text" name="option_${questionCount}_3" placeholder="Option 3" required><br>
+      <input type="text" name="option_${questionCount}_4" placeholder="Option 4" required><br>
+      <label>Correct Option Index:</label>
+      <select name="correct_${questionCount}" required>
+        <option value="0">Option 1</option>
+        <option value="1">Option 2</option>
+        <option value="2">Option 3</option>
+        <option value="3">Option 4</option>
+      </select><br>
+      <input type="number" name="marks_${questionCount}" placeholder="Marks for this question" required><br><br>
+    `;
+    container.appendChild(div);
+    document.getElementById('total_questions').value = ++questionCount;
+  }
+</script>
+{% endblock %}
+"""

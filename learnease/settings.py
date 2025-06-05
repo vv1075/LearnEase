@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-)p)6_q&d@nqc2!&&v1(f(!jz)p#7ugfvy)w@itw-ymp+n#caak
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['10.21.179.82']
 
 INSTALLED_APPS = [
     
@@ -91,6 +91,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # crispy_forms configuration
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+QUIZ_SERVICE_URL = "http://10.0.0.238:8080"
 
 # Login and Redirect URLs
 LOGIN_REDIRECT_URL = 'home'

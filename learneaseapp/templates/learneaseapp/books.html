@@ -1,137 +1,220 @@
 {% extends 'learneaseapp/base.html' %}
 {% load static %}
-
 {% block content %}
-<section class="container">
-    <div class="text-center mb-5">
-        <h2 class="font-weight-bold">Welcome {{ request.user.last_name }}</h2>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <form id="booksForm" method="post">
-                {% csrf_token %}
-                <span>Enter your books:</span>
-                {{ form }}
-                <button id="searchBtn" class="btn btn-danger" type="button">Search</button>
-            </form>
+
+<style>
+  .book-section {
+    padding: 40px 20px;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .book-section h2 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #333;
+  }
+
+  .book-search-box {
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  }
+
+  .book-search-box input {
+    height: 45px;
+    font-size: 16px;
+    border-radius: 8px;
+  }
+
+  .book-search-box button {
+    height: 45px;
+    font-size: 16px;
+    padding: 0 25px;
+    border-radius: 8px;
+  }
+
+  .book-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    transition: 0.3s ease;
+    height: 100%;
+  }
+
+  .book-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .book-card img {
+    max-height: 180px;
+    object-fit: contain;
+    margin-bottom: 10px;
+  }
+
+  .book-card h5 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .book-card p {
+    font-size: 14px;
+    margin: 4px 0;
+  }
+
+  .card-footer {
+    background-color: transparent;
+    border-top: none;
+  }
+
+  .card-footer button {
+    width: 100%;
+  }
+
+  .view-saved-books {
+    margin-top: 30px;
+    text-align: center;
+  }
+
+  .view-saved-books a {
+    font-weight: bold;
+    text-decoration: none;
+    color: #007bff;
+  }
+
+  .view-saved-books a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<section class="book-section container">
+  <div class="text-center mb-4">
+    <h2>📚 Search Your Favorite Books</h2>
+  </div>
+
+  <div class="row justify-content-center mb-4">
+    <div class="col-md-8 book-search-box">
+      <form id="booksForm" method="post">
+        {% csrf_token %}
+        <div class="form-row">
+          <div class="col-md-9">
+            {{ form.text }}
+          </div>
+          <div class="col-md-3 text-right">
+            <button id="searchBtn" class="btn btn-primary btn-block" type="button">🔍 Search</button>
+          </div>
         </div>
+      </form>
     </div>
-    <div class="box">
-        <a href="{% url 'saved_books' %}">Your books</a>
-    </div>
-    <div id="searchResults" class="row mt-5">
-        {% for result in results %}
-        <div class="col-md-6 mb-4">
-            <div class="card h-100">
-                <div class="card-body text-center"> <!-- Modified here: Added text-center class -->
-                    <a href="{{ result.preview }}" target="_blank">
-                        <img class="img-fluid" src="{{ result.thumbnail }}" alt="">
-                    </a>
-                    <h5 class="card-title">{{ result.title }}</h5>
-                    <p class="card-text">{{ result.subtitle }}</p>
-                    {% if result.description %}
-                    <p class="card-text">{{ result.description }}</p>
-                    {% endif %}
-                    <p class="card-text">
-                        {% if result.categories %}
-                            <strong>Categories:</strong>
-                            {% for category in result.categories %}
-                                {{ category }}{% if not forloop.last %}, {% endif %}
-                            {% endfor %}
-                            <br>
-                        {% endif %}
-                        {% if result.count %}
-                            <strong>Pages:</strong> {{ result.count }}<br>
-                        {% endif %}
-                        {% if result.rating %}
-                            <strong>Rating:</strong> {{ result.rating }}<br>
-                        {% endif %}
-                    </p>
-                </div>
-                <div class="card-footer">
-                    <form action="{% url 'save_book' %}" method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="title" value="{{ result.title }}">
-                        <input type="hidden" name="subtitle" value="{{ result.subtitle }}">
-                        <input type="hidden" name="description" value="{{ result.description }}">
-                        <input type="hidden" name="count" value="{{ result.count }}">
-                        <input type="hidden" name="categories" value="{{ result.categories }}">
-                        <input type="hidden" name="rating" value="{{ result.rating }}">
-                        <input type="hidden" name="thumbnail" value="{{ result.thumbnail }}">
-                        <input type="hidden" name="preview" value="{{ result.preview }}">
-                        <button class="btn btn-primary" type="submit">Save</button>
-                    </form>
-                </div>
-            </div>
+  </div>
+
+  <div class="view-saved-books">
+    <a href="{% url 'saved_books' %}">📂 View Your Saved Books</a>
+  </div>
+
+  <div id="searchResults" class="row mt-4">
+    {% for result in results %}
+    <div class="col-md-6 col-lg-4 mb-4">
+      <div class="card book-card h-100 text-center p-3">
+        <a href="{{ result.preview }}" target="_blank">
+          <img class="img-fluid" src="{{ result.thumbnail }}" alt="Book Cover">
+        </a>
+        <h5>{{ result.title }}</h5>
+        <p>{{ result.subtitle }}</p>
+        {% if result.description %}
+          <p>{{ result.description }}</p>
+        {% endif %}
+        <p>
+          {% if result.categories %}
+            <strong>Categories:</strong> {{ result.categories|join:', ' }}<br>
+          {% endif %}
+          {% if result.count %}
+            <strong>Pages:</strong> {{ result.count }}<br>
+          {% endif %}
+          {% if result.rating %}
+            <strong>Rating:</strong> {{ result.rating }}<br>
+          {% endif %}
+        </p>
+        <div class="card-footer">
+          <form action="{% url 'save_book' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="title" value="{{ result.title }}">
+            <input type="hidden" name="subtitle" value="{{ result.subtitle }}">
+            <input type="hidden" name="description" value="{{ result.description }}">
+            <input type="hidden" name="count" value="{{ result.count }}">
+            <input type="hidden" name="categories" value="{{ result.categories }}">
+            <input type="hidden" name="rating" value="{{ result.rating }}">
+            <input type="hidden" name="thumbnail" value="{{ result.thumbnail }}">
+            <input type="hidden" name="preview" value="{{ result.preview }}">
+            <button class="btn btn-outline-success">💾 Save</button>
+          </form>
         </div>
-        {% endfor %}
+      </div>
     </div>
+    {% endfor %}
+  </div>
 </section>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
-    $("#searchBtn").click(function() {
-        var text = $("#id_text").val();
-        $.ajax({
-            type: "POST",
-            url: "{% url 'books' %}",
-            data: {
-                'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
-                'text': text
-            },
-            success: function(data) {
-                // Clear previous search results
-                $("#searchResults").empty();
-                
-                // Display new search results
-                if (data.results && data.results.length > 0) {
-                    $.each(data.results, function(index, result) {
-                        var resultHtml = `
-                            <div class="col-md-6 mb-4">
-                                <div class="card h-100">
-                                    <div class="card-body text-center">
-                                        <a href="${result.preview}" target="_blank">
-                                            <img class="img-fluid" src="${result.thumbnail}" alt="">
-                                        </a>
-                                        <h5 class="card-title">${result.title}</h5>
-                                        <p class="card-text">${result.subtitle}</p>
-                                        ${result.description ? `<p class="card-text">${result.description}</p>` : ''}
-                                        <p class="card-text">
-                                            ${result.categories ? `<strong>Categories:</strong> ${result.categories.join(', ')}<br>` : ''}
-                                            ${result.count ? `<strong>Pages:</strong> ${result.count}<br>` : ''}
-                                            ${result.rating ? `<strong>Rating:</strong> ${result.rating}<br>` : ''}
-                                        </p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <form action="{% url 'save_book' %}" method="post">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="title" value="${result.title}">
-                                            <input type="hidden" name="subtitle" value="${result.subtitle}">
-                                            <input type="hidden" name="description" value="${result.description}">
-                                            <input type="hidden" name="count" value="${result.count}">
-                                            <input type="hidden" name="categories" value="${result.categories}">
-                                            <input type="hidden" name="rating" value="${result.rating}">
-                                            <input type="hidden" name="thumbnail" value="${result.thumbnail}">
-                                            <input type="hidden" name="preview" value="${result.preview}">
-                                            <button class="btn btn-primary" type="submit">Save</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                        $("#searchResults").append(resultHtml);
-                    });
-                } else {
-                    $("#searchResults").html('<p>No results found.</p>');
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-                $("#searchResults").html('<p>Error: Failed to fetch search results.</p>');
-            }
-        });
+  $("#searchBtn").click(function() {
+    var text = $("#id_text").val();
+    $.ajax({
+      type: "POST",
+      url: "{% url 'books' %}",
+      data: {
+        'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+        'text': text
+      },
+      success: function(data) {
+        $("#searchResults").empty();
+        if (data.results && data.results.length > 0) {
+          $.each(data.results, function(index, result) {
+            var cardHtml = `
+              <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card book-card h-100 text-center p-3">
+                  <a href="${result.preview}" target="_blank">
+                    <img class="img-fluid" src="${result.thumbnail}" alt="Book Cover">
+                  </a>
+                  <h5>${result.title}</h5>
+                  <p>${result.subtitle || ''}</p>
+                  ${result.description ? `<p>${result.description}</p>` : ''}
+                  <p>
+                    ${result.categories ? `<strong>Categories:</strong> ${result.categories.join(', ')}<br>` : ''}
+                    ${result.count ? `<strong>Pages:</strong> ${result.count}<br>` : ''}
+                    ${result.rating ? `<strong>Rating:</strong> ${result.rating}<br>` : ''}
+                  </p>
+                  <div class="card-footer">
+                    <form action="{% url 'save_book' %}" method="post">
+                      {% csrf_token %}
+                      <input type="hidden" name="title" value="${result.title}">
+                      <input type="hidden" name="subtitle" value="${result.subtitle}">
+                      <input type="hidden" name="description" value="${result.description}">
+                      <input type="hidden" name="count" value="${result.count}">
+                      <input type="hidden" name="categories" value="${result.categories}">
+                      <input type="hidden" name="rating" value="${result.rating}">
+                      <input type="hidden" name="thumbnail" value="${result.thumbnail}">
+                      <input type="hidden" name="preview" value="${result.preview}">
+                      <button class="btn btn-outline-success">💾 Save</button>
+                    </form>
+                  </div>
+                </div>
+              </div>`;
+            $("#searchResults").append(cardHtml);
+          });
+        } else {
+          $("#searchResults").html('<p>No books found.</p>');
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        $("#searchResults").html('<p>Error loading books.</p>');
+      }
     });
+  });
 });
 </script>
 

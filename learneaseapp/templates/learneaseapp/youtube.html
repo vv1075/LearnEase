@@ -1,38 +1,140 @@
-{% extends 'learneaseapp/base.html' %} 
+{% extends 'learneaseapp/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<section class="container">
-    <div class="text-center mb-5">
-        <h2 class="font-weight-bold">Welcome {{ request.user.last_name }}</h2>
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <form action="" method="post">
-                {% csrf_token %}
-                <span>Enter video name:</span>
-                {{ form }}
-                <button class="btn btn-danger" type="submit">Search</button>
-            </form>
-        </div>
+
+<style>
+  body {
+    background-color: #f0f2f5;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .youtube-wrapper {
+    padding: 40px 30px;
+    max-width: 1300px;
+    margin: auto;
+  }
+
+  .youtube-wrapper h2 {
+    font-weight: 700;
+    font-size: 32px;
+    color: #2c3e50;
+    margin-bottom: 35px;
+    text-align: center;
+  }
+
+  .search-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 40px;
+  }
+
+  .search-card label {
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .search-card input {
+    height: 48px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+  }
+
+  .search-card button {
+    width: 100%;
+    height: 45px;
+    background-color: #e74c3c;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: 0.3s ease-in-out;
+  }
+
+  .search-card button:hover {
+    background-color: #c0392b;
+  }
+
+  .video-card {
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    height: 100%;
+  }
+
+  .video-card:hover {
+    transform: translateY(-6px);
+  }
+
+  .video-card img {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+  }
+
+  .video-card .card-body {
+    padding: 20px;
+  }
+
+  .video-card h5 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2c3e50;
+  }
+
+  .video-card p {
+    font-size: 14px;
+    margin: 6px 0;
+    color: #555;
+  }
+
+  .video-card small {
+    color: #888;
+    font-size: 12px;
+  }
+</style>
+
+<div class="youtube-wrapper">
+  <h2>📺 Explore YouTube Videos</h2>
+
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="search-card">
+        <form method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <label>Enter Video Name:</label>
+            {{ form|crispy }}
+          </div>
+          <button type="submit">🔍 Search</button>
+        </form>
+      </div>
     </div>
-</div>
-    <div class="row">
-        {% for result in results %}
-        <div class="col-md-6 mb-4">
-            <div class="card">
-                <a href="{{ result.link }}" target="_blank">
-                    <img src="{{ result.thumbnails }}" class="card-img-top" alt="Thumbnail">
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title">{{ result.title }}</h5>
-                    <p class="card-text">{{ result.description }}</p>
-                    <p class="card-text"><small class="text-muted">{{ result.channel }}</small></p>
-                    <p class="Duration">{{ result.duration }}</p>
-                    <p class="views">{{ result.views }}</p>
-                    <p class="card-text">{{ result.published }}</p>
-                </div>
-            </div>
+  </div>
+
+  <div class="row">
+    {% for result in results %}
+    <div class="col-md-6 col-lg-4 mb-4">
+      <div class="video-card">
+        <a href="{{ result.link }}" target="_blank">
+          <img src="{{ result.thumbnails }}" alt="Video Thumbnail">
+        </a>
+        <div class="card-body">
+          <h5>{{ result.title }}</h5>
+          <p>{{ result.description|truncatechars:100 }}</p>
+          <p><strong>Channel:</strong> {{ result.channel }}</p>
+          <p><strong>Duration:</strong> {{ result.duration }}</p>
+          <p><strong>Views:</strong> {{ result.views }}</p>
+          <small>Published: {{ result.published }}</small>
         </div>
-        {% endfor %}
+      </div>
     </div>
+    {% endfor %}
+  </div>
 </div>
+
 {% endblock %}

@@ -2,24 +2,172 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="container">
-  <form method="POST">
-    {% csrf_token %}
-    <fieldset class="form-group">
-      <legend class="border-bottom mb-4">Log In</legend>
-      {{form|crispy}}
-    </fieldset>
-    <div class="form-group">
-      <button href="" class="btn btn-outline-info" type="submit">
-        Sign In
-      </button>
+
+<style>
+  .login-container {
+    display: flex;
+    height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .left-panel {
+    width: 50%;
+    background-color: #7d9efb;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+    text-align: center;
+    padding: 50px;
+  }
+
+  .left-panel h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+
+  .left-panel p {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .left-panel a.register-btn {
+    padding: 10px 24px;
+    background: none;
+    border: 2px solid white;
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s ease;
+  }
+
+  .left-panel a.register-btn:hover {
+    background-color: white;
+    color: #7d9efb;
+  }
+
+  .right-panel {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px;
+  }
+
+  .right-panel h2 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+
+  .login-form input {
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+
+  .login-form .icon-input {
+    position: relative;
+  }
+
+  .login-form .icon-input i {
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    transform: translateY(-50%);
+    color: #777;
+  }
+
+  .login-form button {
+    background-color: #7d9efb;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    margin-top: 15px;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .login-form button:hover {
+    background-color: #5f7ee6;
+  }
+
+  .social-icons {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .social-icons a {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 20px;
+    text-decoration: none;
+    color: #333;
+    transition: 0.3s ease;
+  }
+
+  .social-icons a:hover {
+    background-color: #eee;
+  }
+
+  .forgot-pass {
+    text-align: right;
+    font-size: 14px;
+    margin-top: 5px;
+    color: #555;
+  }
+
+</style>
+
+<div class="login-container">
+  <!-- Left Welcome Panel -->
+  <div class="left-panel">
+    <h1>Hello, Welcome!</h1>
+    <p>Don't have an account?</p>
+    <a href="{% url 'register' %}" class="register-btn">Register</a>
+  </div>
+
+  <!-- Right Login Form -->
+  <div class="right-panel">
+    <h2>Login</h2>
+    <form method="POST" class="login-form">
+      {% csrf_token %}
+      <div class="icon-input">
+        <input type="text" name="username" placeholder="Username" required>
+        <i class="fa fa-user"></i>
+      </div>
+      <div class="icon-input">
+        <input type="password" name="password" placeholder="Password" required>
+        <i class="fa fa-lock"></i>
+      </div>
+      <div class="forgot-pass">
+        <a href="#">Forgot Password?</a>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-google"></i></a>
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-github"></i></a>
+      <a href="#"><i class="fab fa-linkedin-in"></i></a>
     </div>
-  </form>
-  <div class="border-top pt-3">
-    <small class="text-muted">Need an Account?
-      <a class="ml-2" href="{% url 'register' %}">Create an Account</a>
-    </small>
   </div>
 </div>
 
-{% endblock content %}
+<!-- ✅ FontAwesome for icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+{% endblock %}

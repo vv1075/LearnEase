@@ -1,0 +1,1064 @@
+[
+  {
+    "id": "0b1f3bed-8ee5-40d6-90c6-83d284e2e357",
+    "title": "AI Quiz on Go routines ",
+    "course_id": "1",
+    "questions": [
+      {
+        "id": 0,
+        "text": "What is a Go routine in Go programming language?",
+        "options": [
+          "A. A type of data structure",
+          "B. A lightweight thread managed by the Go runtime",
+          "C. A way to declare variables in Go",
+          "D. A type of function in Go"
+        ],
+        "correct": 1,
+        "marks": 25
+      },
+      {
+        "id": 1,
+        "text": "How can you start a new Go routine in Go programming?",
+        "options": [
+          "A. Using the 'go' keyword followed by a function call",
+          "B. Using loops in the main function",
+          "C. Using if statements in the main function",
+          "D. Declaring variables with 'goroutine' keyword"
+        ],
+        "correct": 0,
+        "marks": 20
+      },
+      {
+        "id": 2,
+        "text": "What is the purpose of using Go routines in Go programming?",
+        "options": [
+          "A. To slow down the program execution",
+          "B. To add complexity to the code",
+          "C. To achieve concurrency and parallelism",
+          "D. None of the above"
+        ],
+        "correct": 2,
+        "marks": 30
+      },
+      {
+        "id": 3,
+        "text": "Can a Go routine communicate with other Go routines in Go programming?",
+        "options": [
+          "A. Yes, through global variables",
+          "B. No, Go routines are isolated",
+          "C. Yes, using channels for communication",
+          "D. Only if the Go routines are in the same package"
+        ],
+        "correct": 2,
+        "marks": 25
+      }
+    ],
+    "total_marks": 100,
+    "last_updated": 1742236710,
+    "status": "draft",
+    "source": "ai"
+  },
+  {
+    "id": "eba045ed-c318-48c4-a1b1-7beeb8a75205",
+    "title": "AI Quiz on Networking Basics",
+    "course_id": "1",
+    "questions": [
+      {
+        "id": 1,
+        "text": "What is the purpose of a subnet mask in networking?",
+        "options": [
+          "To encrypt the data transmitted over the network",
+          "To determine the physical path for data packets",
+          "To separate the network portion of an IP address from the host portion",
+          "To establish a secure connection between devices"
+        ],
+        "correct": 2,
+        "marks": 24
+      }
+    ],
+    "total_marks": 24,
+    "last_updated": 1742253275,
+    "status": "saved",
+    "source": "ai"
+  },
+  {
+    "id": "da3ce2a6-7895-4d0d-ab6a-72508fc908c2",
+    "title": "Good Question",
+    "course_id": "1",
+    "questions": [
+      {
+        "id": 0,
+        "text": "Better",
+        "options": [
+          "no",
+          "not",
+          "noy",
+          "n"
+        ],
+        "correct": 0,
+        "marks": 18
+      }
+    ],
+    "total_marks": 0,
+    "last_updated": 1742253105,
+    "status": "",
+    "source": ""
+  },
+  {
+    "id": "73edddf9-c94a-4f4d-a217-7284df18e052",
+    "title": "AI Quiz on Spacex",
+    "course_id": "1",
+    "questions": [
+      {
+        "id": 0,
+        "text": "When was SpaceX founded?",
+        "options": [
+          "2002",
+          "2006",
+          "2010",
+          "2014"
+        ],
+        "correct": 0,
+        "marks": 15
+      },
+      {
+        "id": 1,
+        "text": "Who is the CEO of SpaceX?",
+        "options": [
+          "Elon Musk",
+          "Jeff Bezos",
+          "Larry Page",
+          "Mark Zuckerberg"
+        ],
+        "correct": 0,
+        "marks": 20
+      },
+      {
+        "id": 2,
+        "text": "What is the name of SpaceX's reusable rocket system?",
+        "options": [
+          "Falcon 9",
+          "Delta IV",
+          "Atlas V",
+          "Saturn V"
+        ],
+        "correct": 0,
+        "marks": 15
+      },
+      {
+        "id": 3,
+        "text": "In what year did SpaceX successfully launch the Falcon Heavy rocket?",
+        "options": [
+          "2016",
+          "2017",
+          "2018",
+          "2019"
+        ],
+        "correct": 2,
+        "marks": 20
+      },
+      {
+        "id": 4,
+        "text": "Which spacecraft developed by SpaceX is designed to carry astronauts to the International Space Station?",
+        "options": [
+          "Dragon 1",
+          "Crew Dragon",
+          "Starship",
+          "Falcon 9"
+        ],
+        "correct": 1,
+        "marks": 20
+      },
+      {
+        "id": 5,
+        "text": "Where is SpaceX's primary launch site located?",
+        "options": [
+          "Kennedy Space Center",
+          "Vandenberg Air Force Base",
+          "Cape Canaveral Space Launch Complex",
+          "Boca Chica Launch Site"
+        ],
+        "correct": 2,
+        "marks": 15
+      }
+    ],
+    "total_marks": 105,
+    "last_updated": 1742253406,
+    "status": "saved",
+    "source": "ai"
+  },
+  {
+    "id": "66b2b2c9-6b1e-48c2-b553-5e412c59bb79",
+    "title": "AI Quiz on water",
+    "course_id": "1",
+    "questions": [
+      {
+        "id": 1,
+        "text": "What is the chemical formula for water?",
+        "options": [
+          "H2O2",
+          "CO2",
+          "H2O",
+          "NaCl"
+        ],
+        "correct": 2,
+        "marks": 2
+      }
+    ],
+    "total_marks": 2,
+    "last_updated": 1742308204,
+    "status": "draft",
+    "source": "ai"
+  },
+  {
+    "id": "ea5d1d4f-8bd0-4406-8c2c-d8093f2fa178",
+    "title": "AI Quiz on Math Formals ",
+    "course_id": "1",
+    "questions": [
+      {
+        "id": 0,
+        "text": "What does PEMDAS stand for in math?",
+        "options": [
+          "Please Excuse My Dear Aunt Sally",
+          "Parentheses Exponents Multiplication Division Addition Subtraction",
+          "Personal Electronic Mobile Device and Speakers",
+          "Problem Every Math Doctor Always Solves"
+        ],
+        "correct": 1,
+        "marks": 30
+      },
+      {
+        "id": 1,
+        "text": "What is the formula for finding the area of a rectangle?",
+        "options": [
+          "A = lw",
+          "A = 2(l + w)",
+          "A = l + w",
+          "A = 2lw"
+        ],
+        "correct": 0,
+        "marks": 35
+      },
+      {
+        "id": 2,
+        "text": "Which of the following is the quadratic formula?",
+        "options": [
+          "x = (-b ± √(b² - 4ac))/2a",
+          "a² + b² = c²",
+          "A = 1/2bh",
+          "πr²"
+        ],
+        "correct": 0,
+        "marks": 35
+      }
+    ],
+    "total_marks": 100,
+    "last_updated": 1742313614,
+    "status": "draft",
+    "source": "ai"
+  },
+  {
+    "id": "1ff51635-5351-49b9-ad05-4564f8b2dd71",
+    "title": "AI Quiz on Go routines ",
+    "course_id": "1",
+    "questions": [
+      {
+        "id": 0,
+        "text": "What is a goroutine in Go language?",
+        "options": [
+          "A type of data structure",
+          "A type of function",
+          "A type of variable",
+          "A concurrent function or method"
+        ],
+        "correct": 3,
+        "marks": 20
+      },
+      {
+        "id": 1,
+        "text": "How can you create a new goroutine in Go?",
+        "options": [
+          "Using the 'new' keyword",
+          "By adding go keyword before a function or method call",
+          "By using the 'async' keyword",
+          "By using the 'goro' keyword"
+        ],
+        "correct": 1,
+        "marks": 15
+      },
+      {
+        "id": 2,
+        "text": "What is the purpose of using goroutines in Go programming?",
+        "options": [
+          "To create user interfaces",
+          "To handle concurrent tasks efficiently",
+          "To access external APIs",
+          "To define data structures"
+        ],
+        "correct": 1,
+        "marks": 25
+      },
+      {
+        "id": 3,
+        "text": "How are goroutines different from threads?",
+        "options": [
+          "Goroutines are lighter weight than threads",
+          "Goroutines can't run concurrently",
+          "Goroutines have more overhead than threads",
+          "Goroutines can't be used for parallel processing"
+        ],
+        "correct": 0,
+        "marks": 20
+      },
+      {
+        "id": 4,
+        "text": "Which keyword is used to wait for all goroutines to finish execution?",
+        "options": [
+          "stop",
+          "finish",
+          "wait",
+          "sync"
+        ],
+        "correct": 3,
+        "marks": 20
+      }
+    ],
+    "total_marks": 100,
+    "last_updated": 1742430543,
+    "status": "draft",
+    "source": "ai"
+  },
+  {
+    "id": "ab778b91-7de0-4a47-a8a0-3102d9966e6a",
+    "title": "AI Quiz on Go routies code questions based on the Go Programming language book ",
+    "course_id": "1",
+    "questions": [
+      {
+        "id": 0,
+        "text": "What is the function signature for a basic Go HTTP server?",
+        "options": [
+          "func main() {}",
+          "func server(port string) {}",
+          "func ServeHTTP(w http.ResponseWriter, r *http.Request) {}",
+          "func createServer() {}"
+        ],
+        "correct": 2,
+        "marks": 5
+      },
+      {
+        "id": 1,
+        "text": "How do you handle errors in Go routines?",
+        "options": [
+          "Use a try-catch block",
+          "Return errors as a second return value",
+          "Ignore errors completely",
+          "Use a global error handler function"
+        ],
+        "correct": 1,
+        "marks": 5
+      }
+    ],
+    "total_marks": 10,
+    "last_updated": 1742430630,
+    "status": "draft",
+    "source": "ai"
+  },
+  {
+    "id": "d03bbb30-709a-40ae-aa79-3bb3bf4760b3",
+    "title": "AI Quiz on Math Formals ",
+    "course_id": "3",
+    "questions": [
+      {
+        "id": 0,
+        "text": "What is the formula for the area of a rectangle?",
+        "options": [
+          "A = lw",
+          "A = 2l + 2w",
+          "A = l + w",
+          "A = lh"
+        ],
+        "correct": 0,
+        "marks": 3
+      },
+      {
+        "id": 1,
+        "text": "What is the formula for the circumference of a circle?",
+        "options": [
+          "C = πr",
+          "C = 2πr",
+          "C = πr^2",
+          "C = 2r^2"
+        ],
+        "correct": 1,
+        "marks": 4
+      },
+      {
+        "id": 2,
+        "text": "What is the formula for the volume of a sphere?",
+        "options": [
+          "V = 4/3πr^2",
+          "V = 4/3πr^3",
+          "V = 3/4πr^2",
+          "V = 4/3πr"
+        ],
+        "correct": 1,
+        "marks": 3
+      }
+    ],
+    "total_marks": 10,
+    "last_updated": 1743116074,
+    "status": "draft",
+    "source": "ai"
+  },
+  {
+    "id": "e6e555a7-e23b-4db4-b0fa-e3f0aeb1f851",
+    "title": "AI Quiz on Math Formals ",
+    "course_id": "2",
+    "questions": [
+      {
+        "id": 1,
+        "text": "What is the formula for the area of a rectangle?",
+        "options": [
+          "A = l x w",
+          "A = 2 x (l + w)",
+          "A = l / w",
+          "A = l - w"
+        ],
+        "correct": 0,
+        "marks": 3
+      },
+      {
+        "id": 2,
+        "text": "What is the Pythagorean theorem formula?",
+        "options": [
+          "a^2 + b^2 = c^2",
+          "a + b = c",
+          "a x b = c",
+          "a / b = c"
+        ],
+        "correct": 0,
+        "marks": 4
+      },
+      {
+        "id": 3,
+        "text": "What is the formula for the volume of a sphere?",
+        "options": [
+          "V = (4/3)πr^3",
+          "V = 2πr^2",
+          "V = πr^2",
+          "V = 4πr"
+        ],
+        "correct": 0,
+        "marks": 3
+      }
+    ],
+    "total_marks": 10,
+    "last_updated": 1744223105,
+    "status": "draft",
+    "source": "ai"
+  },
+  {
+    "id": "1263814f-d47b-4d48-bb2d-3a0dbd883ff0",
+    "title": "AI Quiz on Math Formals ",
+    "course_id": "2",
+    "questions": [
+      {
+        "id": 0,
+        "text": "What is the formula to calculate the area of a rectangle?",
+        "options": [
+          "Length x Width",
+          "2 x (Length + Width)",
+          "Length / Width",
+          "Length + Width"
+        ],
+        "correct": 0,
+        "marks": 2
+      },
+      {
+        "id": 1,
+        "text": "Which formula is used to find the circumference of a circle?",
+        "options": [
+          "2 x π x Radius",
+          "π x (Radius)^2",
+          "2 x Radius",
+          "π + Radius"
+        ],
+        "correct": 0,
+        "marks": 3
+      },
+      {
+        "id": 2,
+        "text": "What is the formula for the volume of a cylinder?",
+        "options": [
+          "π x (Radius)^2 x Height",
+          "2 x π x Radius",
+          "Length x Width x Height",
+          "2 x (Length + Width + Height)"
+        ],
+        "correct": 0,
+        "marks": 2
+      },
+      {
+        "id": 3,
+        "text": "Which formula is used to calculate the slope of a line?",
+        "options": [
+          "(y2 - y1) / (x2 - x1)",
+          "(y1 - y2) / (x1 - x2)",
+          "(y2 + y1) / (x2 + x1)",
+          "(y1 + y2) / (x1 + x2)"
+        ],
+        "correct": 0,
+        "marks": 3
+      }
+    ],
+    "total_marks": 10,
+    "last_updated": 1744224173,
+    "status": "draft",
+    "source": "ai"
+  },
+  {
+    "id": "63872ab7-f92c-4f20-87db-5f8f64ef8415",
+    "title": "AI Quiz on polymorphism and  inheritance",
+    "course_id": "4",
+    "questions": [
+      {
+        "id": 0,
+        "text": "What is polymorphism in object-oriented programming?",
+        "options": [
+          "The ability of a variable, function, or object to take on multiple forms",
+          "The process of creating a new class from an existing class",
+          "The ability to access the members of a class by using a pointer",
+          "The process of hiding the implementation details of a class"
+        ],
+        "correct": 0,
+        "marks": 3
+      },
+      {
+        "id": 1,
+        "text": "Which of the following is NOT a type of inheritance?",
+        "options": [
+          "Single inheritance",
+          "Multiple inheritance",
+          "Hierarchical inheritance",
+          "Dynamic inheritance"
+        ],
+        "correct": 3,
+        "marks": 3
+      },
+      {
+        "id": 2,
+        "text": "What is inheritance in object-oriented programming?",
+        "options": [
+          "The ability of a class to inherit properties and behavior from another class",
+          "The process of creating multiple instances of a class",
+          "The process of declaring a member function in the derived class",
+          "The process of overriding a base class function"
+        ],
+        "correct": 0,
+        "marks": 3
+      },
+      {
+        "id": 3,
+        "text": "Which keyword is used to achieve inheritance in C++?",
+        "options": [
+          "extend",
+          "inherits",
+          "base",
+          "public"
+        ],
+        "correct": 3,
+        "marks": 3
+      },
+      {
+        "id": 4,
+        "text": "What is method overloading in object-oriented programming?",
+        "options": [
+          "Creating multiple functions with the same name but different parameters",
+          "Allowing different classes to share the same interface or method signatures",
+          "Accessing members of a class from outside the class",
+          "Hiding the implementation details of a class"
+        ],
+        "correct": 0,
+        "marks": 3
+      }
+    ],
+    "total_marks": 15,
+    "last_updated": 1746634730,
+    "status": "draft",
+    "source": "ai"
+  },
+  {
+    "id": "932639a2-eacf-4529-b7ec-5631d1d40eeb",
+    "title": "AI Quiz on Opps concepts with java",
+    "course_id": "4",
+    "questions": [
+      {
+        "id": 0,
+        "text": "What is object-oriented programming?",
+        "options": [
+          "A programming paradigm based on objects",
+          "A style of writing code without classes",
+          "A type of programming using only functions",
+          "A method of organizing data in arrays"
+        ],
+        "correct": 0,
+        "marks": 6
+      },
+      {
+        "id": 1,
+        "text": "What does 'encapsulation' refer to in Java?",
+        "options": [
+          "A way to hide data within a class and only expose necessary methods",
+          "A way to create multiple instances of a class",
+          "A way to ensure data is secure during transmission",
+          "A way to compare objects for equality"
+        ],
+        "correct": 0,
+        "marks": 6
+      },
+      {
+        "id": 2,
+        "text": "What is the purpose of inheritance in Java?",
+        "options": [
+          "To allow a class to inherit methods and attributes from another class",
+          "To create new classes in a hierarchy",
+          "To enforce security constraints in the code",
+          "To define interfaces for classes"
+        ],
+        "correct": 0,
+        "marks": 6
+      }
+    ],
+    "total_marks": 18,
+    "last_updated": 1746670497,
+    "status": "draft",
+    "source": "ai"
+  },
+  {
+    "id": "e45f5b52-b8d0-46e9-9c71-2c356c43cf34",
+    "title": "AI Quiz on networking ",
+    "course_id": "4",
+    "questions": [
+      {
+        "id": 0,
+        "text": "What is a commonly used protocol for sending email over a network?",
+        "options": [
+          "HTTP",
+          "SMTP",
+          "FTP",
+          "DNS"
+        ],
+        "correct": 1,
+        "marks": 4
+      },
+      {
+        "id": 1,
+        "text": "What device is used to connect multiple computers within a network?",
+        "options": [
+          "Modem",
+          "Router",
+          "Switch",
+          "Firewall"
+        ],
+        "correct": 2,
+        "marks": 4
+      },
+      {
+        "id": 2,
+        "text": "Which of the following is NOT a type of networking topology?",
+        "options": [
+          "Star",
+          "Ring",
+          "Bus",
+          "Line"
+        ],
+        "correct": 3,
+        "marks": 5
+      },
+      {
+        "id": 3,
+        "text": "What is the purpose of a DNS server in a network?",
+        "options": [
+          "Provides physical addresses for devices",
+          "Transfers files between devices",
+          "Translates domain names to IP addresses",
+          "Manages network security"
+        ],
+        "correct": 2,
+        "marks": 5
+      }
+    ],
+    "total_marks": 18,
+    "last_updated": 1746671100,
+    "status": "draft",
+    "source": "ai"
+  },
+  {
+    "id": "c1d5f0e1-9ead-441d-95e7-25e862461f66",
+    "title": "AI Quiz on python basics",
+    "course_id": "4",
+    "questions": [
+      {
+        "id": 0,
+        "text": "What is Python?",
+        "options": [
+          "A programming language",
+          "A type of snake",
+          "A type of food",
+          "A country"
+        ],
+        "correct": 0,
+        "marks": 3
+      },
+      {
+        "id": 1,
+        "text": "What is the syntax for printing in Python?",
+        "options": [
+          "print()",
+          "display()",
+          "show()",
+          "output()"
+        ],
+        "correct": 0,
+        "marks": 2
+      },
+      {
+        "id": 2,
+        "text": "What is a list in Python?",
+        "options": [
+          "A collection of elements of different data types",
+          "A data type that can store multiple items",
+          "A type of loop",
+          "A method in Python"
+        ],
+        "correct": 1,
+        "marks": 3
+      },
+      {
+        "id": 3,
+        "text": "What does the 'len()' function do in Python?",
+        "options": [
+          "Returns the number of characters in a string",
+          "Returns the number of items in a list or sequence",
+          "Returns the length of a variable",
+          "Returns the square root of a number"
+        ],
+        "correct": 1,
+        "marks": 4
+      },
+      {
+        "id": 4,
+        "text": "Which keyword is used to define a function in Python?",
+        "options": [
+          "method",
+          "def",
+          "function",
+          "define"
+        ],
+        "correct": 1,
+        "marks": 3
+      }
+    ],
+    "total_marks": 15,
+    "last_updated": 1746796327,
+    "status": "draft",
+    "source": "ai"
+  },
+  {
+    "id": "81e1e6e3-555e-4651-b1e3-d013a1d99b75",
+    "title": "AI Quiz on network technologies",
+    "course_id": "4",
+    "questions": [
+      {
+        "id": 0,
+        "text": "What is the purpose of a firewall in network security?",
+        "options": [
+          "A. To filter and monitor network traffic",
+          "B. To physically connect devices in a network",
+          "C. To store data securely",
+          "D. To enhance network speed"
+        ],
+        "correct": 0,
+        "marks": 5
+      },
+      {
+        "id": 1,
+        "text": "Which protocol is commonly used for secure communication over a network?",
+        "options": [
+          "A. HTTP",
+          "B. FTP",
+          "C. SSL",
+          "D. SMTP"
+        ],
+        "correct": 2,
+        "marks": 5
+      },
+      {
+        "id": 2,
+        "text": "What is the purpose of a router in a network?",
+        "options": [
+          "A. To convert digital signals to analog signals",
+          "B. To provide physical access to the network",
+          "C. To connect multiple networks and route data between them",
+          "D. To store data backups"
+        ],
+        "correct": 2,
+        "marks": 5
+      }
+    ],
+    "total_marks": 15,
+    "last_updated": 1746797514,
+    "status": "draft",
+    "source": "ai"
+  },
+  {
+    "id": "d1bc0161-4420-481c-91dc-b0b224736401",
+    "title": "AI Quiz on Python sytanx",
+    "course_id": "4",
+    "questions": [
+      {
+        "id": 1,
+        "text": "What symbol is used to represent comments in Python?",
+        "options": [
+          "//",
+          "#",
+          "/*",
+          "//"
+        ],
+        "correct": 1,
+        "marks": 2
+      },
+      {
+        "id": 2,
+        "text": "Which symbol is used for assignment in Python?",
+        "options": [
+          "=",
+          "==",
+          "=\u003e",
+          ":="
+        ],
+        "correct": 0,
+        "marks": 2
+      },
+      {
+        "id": 3,
+        "text": "How do you indicate the end of a statement in Python?",
+        "options": [
+          "semicolon (;)",
+          "colon (:)",
+          "period (.)",
+          "comma (,)"
+        ],
+        "correct": 0,
+        "marks": 3
+      },
+      {
+        "id": 4,
+        "text": "Which of the following is NOT a valid variable name in Python?",
+        "options": [
+          "myVariable",
+          "1variable",
+          "_variable",
+          "variable_1"
+        ],
+        "correct": 1,
+        "marks": 3
+      }
+    ],
+    "total_marks": 10,
+    "last_updated": 1746798995,
+    "status": "draft",
+    "source": "ai"
+  },
+  {
+    "id": "13e1cf9e-c83b-4fc0-a2c4-047921f81d25",
+    "title": "AI Quiz on Networking basics",
+    "course_id": "4",
+    "questions": [
+      {
+        "id": 0,
+        "text": "What is the primary purpose of networking?",
+        "options": [
+          "A. Sharing memes",
+          "B. Communicating information",
+          "C. Playing video games",
+          "D. Watching movies"
+        ],
+        "correct": 1,
+        "marks": 10
+      },
+      {
+        "id": 1,
+        "text": "Which device is used to connect multiple computers in a network?",
+        "options": [
+          "A. Router",
+          "B. Modem",
+          "C. Printer",
+          "D. Scanner"
+        ],
+        "correct": 0,
+        "marks": 10
+      },
+      {
+        "id": 2,
+        "text": "What is the standard protocol used for sending emails over the internet?",
+        "options": [
+          "A. SMTP",
+          "B. FTP",
+          "C. HTTP",
+          "D. SNMP"
+        ],
+        "correct": 0,
+        "marks": 10
+      },
+      {
+        "id": 3,
+        "text": "What is the purpose of an IP address?",
+        "options": [
+          "A. Identifying a computer on the network",
+          "B. Controlling the internet speed",
+          "C. Playing online games",
+          "D. Storing files"
+        ],
+        "correct": 0,
+        "marks": 10
+      },
+      {
+        "id": 4,
+        "text": "Which of the following is a type of network topology?",
+        "options": [
+          "A. Circle",
+          "B. Square",
+          "C. Triangle",
+          "D. Star"
+        ],
+        "correct": 3,
+        "marks": 10
+      },
+      {
+        "id": 5,
+        "text": "Which cable is commonly used to connect computers to a network hub or switch?",
+        "options": [
+          "A. Ethernet",
+          "B. HDMI",
+          "C. USB",
+          "D. VGA"
+        ],
+        "correct": 0,
+        "marks": 10
+      },
+      {
+        "id": 6,
+        "text": "What does LAN stand for in networking?",
+        "options": [
+          "A. Local Area Network",
+          "B. Large Area Network",
+          "C. Long-range Area Network",
+          "D. Land Area Network"
+        ],
+        "correct": 0,
+        "marks": 10
+      },
+      {
+        "id": 7,
+        "text": "Which networking device operates at the Data Link Layer of the OSI model?",
+        "options": [
+          "A. Switch",
+          "B. Router",
+          "C. Hub",
+          "D. Modem"
+        ],
+        "correct": 0,
+        "marks": 10
+      },
+      {
+        "id": 8,
+        "text": "What is a subnet mask used for in networking?",
+        "options": [
+          "A. Filtering spam emails",
+          "B. Determining the network portion of an IP address",
+          "C. Blocking websites",
+          "D. Speeding up internet connection"
+        ],
+        "correct": 1,
+        "marks": 10
+      },
+      {
+        "id": 9,
+        "text": "Which protocol is used for transferring files between a client and a server on a network?",
+        "options": [
+          "A. FTP",
+          "B. SMTP",
+          "C. HTTP",
+          "D. POP3"
+        ],
+        "correct": 0,
+        "marks": 10
+      },
+      {
+        "id": 10,
+        "text": "What is the speed of a standard Ethernet connection?",
+        "options": [
+          "A. 1 Mbps",
+          "B. 10 Mbps",
+          "C. 100 Mbps",
+          "D. 1000 Mbps"
+        ],
+        "correct": 2,
+        "marks": 10
+      },
+      {
+        "id": 11,
+        "text": "Which of the following is a private IP address?",
+        "options": [
+          "A. 192.168.1.1",
+          "B. 208.77.188.166",
+          "C. 132.254.75.16",
+          "D. 172.16.33.45"
+        ],
+        "correct": 0,
+        "marks": 10
+      },
+      {
+        "id": 12,
+        "text": "What is the purpose of a DNS server?",
+        "options": [
+          "A. Secure online transactions",
+          "B. Resolve domain names to IP addresses",
+          "C. Filter internet content",
+          "D. Speed up file downloads"
+        ],
+        "correct": 1,
+        "marks": 10
+      },
+      {
+        "id": 13,
+        "text": "What type of cable is commonly used for high-speed internet connections?",
+        "options": [
+          "A. Fiber-optic",
+          "B. Coaxial",
+          "C. Twisted pair",
+          "D. HDMI"
+        ],
+        "correct": 0,
+        "marks": 10
+      },
+      {
+        "id": 14,
+        "text": "Which layer of the OSI model is responsible for logical addressing and routing?",
+        "options": [
+          "A. Network Layer",
+          "B. Transport Layer",
+          "C. Data Link Layer",
+          "D. Physical Layer"
+        ],
+        "correct": 0,
+        "marks": 10
+      }
+    ],
+    "total_marks": 150,
+    "last_updated": 1746800852,
+    "status": "draft",
+    "source": "ai"
+  }
+]

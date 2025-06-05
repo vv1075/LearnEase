@@ -1,0 +1,29 @@
+{% extends 'learneaseapp/base.html' %}
+{% block content %}
+
+<h2>{{ quiz.title }}</h2>
+
+<form method="POST">
+  {% csrf_token %}
+
+  {% for question in quiz.questions %}
+    <div class="question-block">
+      <p><strong>Question {{ forloop.counter }}: {{ question.text }}</strong></p>
+
+      {% for option in question.options %}
+        <label>
+          <input type="radio" name="question_{{ forloop.parentloop.counter0 }}" value="{{ forloop.counter0 }}" required>
+          {{ option }}
+        </label><br>
+      {% endfor %}
+
+    </div>
+    <br>
+  {% endfor %}
+
+  <button type="submit">Submit Quiz</button>
+</form>
+
+<a href="/quizzes/">⬅ Back to Quizzes</a>
+
+{% endblock %}

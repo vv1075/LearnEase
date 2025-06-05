@@ -1,0 +1,57 @@
+{% extends 'learneaseapp/base.html' %}
+{% block content %}
+
+<div style="max-width: 800px; margin: auto;">
+  <h2 style="color: #2c3e50;">✏️ Edit Quiz</h2>
+
+  <form method="POST" style="margin-top: 20px; background: #f9f9f9; padding: 25px; border-radius: 10px;">
+    {% csrf_token %}
+    
+    <label><strong>Quiz Title:</strong></label><br>
+    <input type="text" name="quiz_title" value="{{ quiz.title }}" required style="width: 100%; padding: 8px; margin-bottom: 20px;">
+
+    <input type="hidden" name="total_questions" id="total_questions" value="{{ quiz.questions|length }}">
+
+    <div id="questions-container">
+      {% for question in quiz.questions %}
+        <div class="question-block" style="margin-bottom: 25px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+          <h4>Question {{ forloop.counter }}</h4>
+
+          <label>Question Text:</label><br>
+          <input type="text" name="question_text_{{ forloop.counter0 }}" value="{{ question.text }}" required style="width: 100%; padding: 6px;"><br><br>
+
+          <label>Options:</label><br>
+          <input type="text" name="option_{{ forloop.counter0 }}_1" value="{{ question.options.0 }}" required style="width: 100%; padding: 6px;"><br>
+          <input type="text" name="option_{{ forloop.counter0 }}_2" value="{{ question.options.1 }}" required style="width: 100%; padding: 6px;"><br>
+          <input type="text" name="option_{{ forloop.counter0 }}_3" value="{{ question.options.2 }}" required style="width: 100%; padding: 6px;"><br>
+          <input type="text" name="option_{{ forloop.counter0 }}_4" value="{{ question.options.3 }}" required style="width: 100%; padding: 6px;"><br><br>
+
+          <label>Correct Option Index (0-3):</label>
+          <select name="correct_{{ forloop.counter0 }}" required style="padding: 6px;">
+            <option value="0" {% if question.correct == 0 %}selected{% endif %}>Option 1</option>
+            <option value="1" {% if question.correct == 1 %}selected{% endif %}>Option 2</option>
+            <option value="2" {% if question.correct == 2 %}selected{% endif %}>Option 3</option>
+            <option value="3" {% if question.correct == 3 %}selected{% endif %}>Option 4</option>
+          </select><br><br>
+
+          <label>Marks:</label><br>
+          <input type="number" name="marks_{{ forloop.counter0 }}" value="{{ question.marks }}" required style="width: 80px; padding: 5px;">
+        </div>
+      {% endfor %}
+      <h4>Assign Students:</h4>
+        {% for student in students %}
+          <label>
+            <input type="checkbox" name="assigned_students" value="{{ student.id }}"
+                  {% if student in assigned_students %}checked{% endif %}>
+            {{ student.username }}
+          </label><br>
+        {% endfor %}  
+    </div>
+
+    <button type="submit" style="margin-top: 20px; padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 5px;">✅ Update Quiz</button>
+  </form>
+
+  <a href="" style="margin-top: 20px; display: inline-block;">⬅ Back to Quizzes</a>
+</div>
+
+{% endblock %}

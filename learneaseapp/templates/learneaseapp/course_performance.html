@@ -1,0 +1,51 @@
+{% extends 'learneaseapp/base.html' %}
+{% block content %}
+<h2>📘 Performance - {{ course.name }}</h2>
+
+{% if is_professor %}
+<table class="table table-bordered table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th>Student</th>
+      <th>Assignment Score</th>
+      <th>Total Assignment Marks</th>
+      <th>Assignment %</th>
+      <th>Quiz Score</th>
+      <th>Total Quiz Marks</th>
+      <th>Quiz %</th>
+      <th>Overall Score</th>
+      <th>Overall Total</th>
+      <th>Overall %</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for perf in performance_data %}
+    <tr>
+      <td>{{ perf.student.get_full_name|default:perf.student.username }}</td>
+      <td>{{ perf.assignment_score }}</td>
+      <td>{{ perf.assignment_total }}</td>
+      <td>{{ perf.assignment_percent }}%</td>
+      <td>{{ perf.quiz_score }}</td>
+      <td>{{ perf.quiz_total }}</td>
+      <td>{{ perf.quiz_percent }}%</td>
+      <td>{{ perf.overall_score }}</td>
+      <td>{{ perf.overall_total }}</td>
+      <td><strong>{{ perf.overall_percent }}%</strong></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+  {% for perf in performance_data %}
+    <div class="card" style="padding: 20px; margin: 20px auto; max-width: 700px;">
+      <h4>Your Performance Summary</h4>
+      <p><strong>Assignment Score:</strong> {{ perf.assignment_score }} / {{ perf.assignment_total }} ({{ perf.assignment_percent }}%)</p>
+      <p><strong>Quiz Score:</strong> {{ perf.quiz_score }} / {{ perf.quiz_total }} ({{ perf.quiz_percent }}%)</p>
+      <hr>
+      <h5><strong>Total Score:</strong> {{ perf.overall_score }} / {{ perf.overall_total }}</h5>
+      <h4><strong>Overall Percentage:</strong> {{ perf.overall_percent }}%</h4>
+    </div>
+  {% endfor %}
+{% endif %}
+
+{% endblock %}
